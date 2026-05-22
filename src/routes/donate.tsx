@@ -237,7 +237,7 @@ function Donate() {
 
               <div className="mt-6 rounded-xl border-2 border-neutral-300 px-5 py-4 focus-within:border-neutral-900">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-extrabold text-neutral-900">FCFA</span>
+                  <span className="text-3xl font-extrabold text-neutral-900">{currency}</span>
                   <input
                     inputMode="numeric"
                     placeholder="0"
