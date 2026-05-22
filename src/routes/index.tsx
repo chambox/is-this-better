@@ -32,23 +32,56 @@ function Campaign() {
 
   const presets = [2000, 5000, 10000, 25000, 50000];
 
+  const scrollToDonate = () => {
+    document.getElementById("donate")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: "Hands & Hearts for Philip (HHP)",
+      text: "Help Philip recover — every contribution counts.",
+      url: typeof window !== "undefined" ? window.location.href : "",
+    };
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share(shareData);
+      } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(shareData.url);
+        alert("Link copied to clipboard");
+      }
+    } catch {
+      /* user cancelled */
+    }
+  };
+
+  const handleDonate = () => {
+    const value = typeof amount === "number" && amount > 0 ? amount : 0;
+    alert(
+      value > 0
+        ? `Thanks! You'll be redirected to MTN Mobile Money to complete a ${fmt(value)} FCFA donation.`
+        : "Please choose or enter an amount first.",
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#f7f7f5] text-neutral-900">
       {/* Top bar */}
       <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/85 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <a href="#" className="flex items-center gap-2 font-semibold tracking-tight">
+          <a href="/" className="flex items-center gap-2 font-semibold tracking-tight">
             <span className="grid size-7 place-items-center rounded-full bg-[#02a95c] text-white">
               <Heart className="size-3.5 fill-white" />
             </span>
             <span>givehope</span>
           </a>
           <nav className="hidden items-center gap-6 text-sm text-neutral-600 md:flex">
-            <a href="#" className="hover:text-neutral-900">Search</a>
-            <a href="#" className="hover:text-neutral-900">Start a fundraiser</a>
-            <a href="#" className="hover:text-neutral-900">Sign in</a>
+            <button onClick={scrollToDonate} className="hover:text-neutral-900">Donate</button>
+            <button onClick={handleShare} className="hover:text-neutral-900">Share</button>
           </nav>
-          <button className="rounded-full bg-[#02a95c] px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#028f4e]">
+          <button
+            onClick={scrollToDonate}
+            className="rounded-full bg-[#02a95c] px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#028f4e]"
+          >
             Donate
           </button>
         </div>
@@ -132,10 +165,10 @@ function Campaign() {
 
             {/* Action buttons (mobile) */}
             <div className="mt-6 flex gap-3 lg:hidden">
-              <button className="flex flex-1 items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white py-3 text-sm font-semibold hover:bg-neutral-50">
+              <button onClick={handleShare} className="flex flex-1 items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white py-3 text-sm font-semibold hover:bg-neutral-50">
                 <Share2 className="size-4" /> Share
               </button>
-              <button className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white hover:bg-[#028f4e]">
+              <button onClick={scrollToDonate} className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white hover:bg-[#028f4e]">
                 <Heart className="size-4 fill-white" /> Donate
               </button>
             </div>
@@ -152,13 +185,16 @@ function Campaign() {
               </p>
             </div>
 
-            <button className="mt-6 inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-700">
+            <button
+              onClick={() => alert("Thanks for flagging — our team will review this fundraiser.")}
+              className="mt-6 inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-700"
+            >
               <Flag className="size-4" /> Report fundraiser
             </button>
           </section>
 
           {/* Right column - donate card */}
-          <aside className="lg:sticky lg:top-20 lg:self-start">
+          <aside id="donate" className="lg:sticky lg:top-20 lg:self-start scroll-mt-20">
             <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
               <div className="mb-4">
                 <p className="text-2xl font-bold text-neutral-900">
@@ -177,10 +213,10 @@ function Campaign() {
               </div>
 
               <div className="mt-5 space-y-2">
-                <button className="flex w-full items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white py-3 text-sm font-semibold hover:bg-neutral-50">
+                <button onClick={handleShare} className="flex w-full items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white py-3 text-sm font-semibold hover:bg-neutral-50">
                   <Share2 className="size-4" /> Share
                 </button>
-                <button className="flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#028f4e]">
+                <button onClick={handleDonate} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#028f4e]">
                   <Heart className="size-4 fill-white" /> Donate now
                 </button>
               </div>
@@ -248,7 +284,10 @@ function Campaign() {
                     </li>
                   ))}
                 </ul>
-                <button className="mt-4 w-full rounded-full border border-neutral-300 bg-white py-2 text-sm font-semibold hover:bg-neutral-50">
+                <button
+                  onClick={() => alert("Full donor list coming soon.")}
+                  className="mt-4 w-full rounded-full border border-neutral-300 bg-white py-2 text-sm font-semibold hover:bg-neutral-50"
+                >
                   See all
                 </button>
               </div>
@@ -266,7 +305,7 @@ function Campaign() {
 
       {/* Sticky mobile CTA */}
       <div className="sticky bottom-0 z-30 border-t border-neutral-200 bg-white/95 p-3 backdrop-blur lg:hidden">
-        <button className="flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white shadow-sm">
+        <button onClick={handleDonate} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white shadow-sm">
           <Heart className="size-4 fill-white" /> Donate now
         </button>
       </div>
