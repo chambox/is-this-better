@@ -225,7 +225,7 @@ function Donate() {
                       }`}
                     >
                       {fmt(v)}
-                      {suggested && (
+                      {isSuggested && (
                         <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#c2f17a] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-neutral-900">
                           ♥ Suggested
                         </span>
