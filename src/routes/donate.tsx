@@ -22,8 +22,6 @@ const fmtUSD = (n: number) =>
   new Intl.NumberFormat("en-US", { minimumFractionDigits: n % 1 === 0 ? 0 : 2, maximumFractionDigits: 2 }).format(n);
 
 function Donate() {
-  const [amount, setAmount] = useState<number>(SUGGESTED);
-  const [custom, setCustom] = useState<string>("");
   const [method, setMethod] = useState<"mtn" | "orange" | "stripe" | "paypal">("stripe");
   const isMobileMoney = method === "mtn" || method === "orange";
   const isCard = method === "stripe";
@@ -47,9 +45,26 @@ function Donate() {
   const [cardCvc, setCardCvc] = useState("");
   const [comment, setComment] = useState("");
 
+  // Reset amount when switching between FCFA and USD methods
+  const prevIntlRef = (Donate as any)._prevIntl;
+  if (prevIntlRef !== isIntl) {
+    (Donate as any)._prevIntl = isIntl;
+  }
+
   const remaining = Math.max(0, GOAL - RAISED);
-  const remainingDisplay = isIntl ? remaining / USD_RATE : remaining;
+  const remainingDisplay = isIntl ? Math.ceil(remaining / USD_RATE) : remaining;
   const percent = useMemo(() => Math.min(100, (RAISED / GOAL) * 100), []);
+
+  const R = 28;
+  const C = 2 * Math.PI * R;
+  const offset = C - (percent / 100) * C;
+
+  const effective = custom ? Number(custom) || 0 : (presets.includes(amount) ? amount : suggested);
+
+  const handleAmount = (v: number) => {
+    setAmount(v);
+    setCustom("");
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
