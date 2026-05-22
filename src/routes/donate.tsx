@@ -9,10 +9,17 @@ export const Route = createFileRoute("/donate")({
 const GOAL = 2_000_000;
 const RAISED = 500;
 
-const PRESETS = [50_000, 25_000, 10_000, 5_000, 2_000, 1_000];
-const SUGGESTED = 5_000;
+// FX: 1 USD ≈ 600 FCFA
+const USD_RATE = 600;
 
-const fmt = (n: number) => new Intl.NumberFormat("fr-FR").format(n);
+const PRESETS_FCFA = [50_000, 25_000, 10_000, 5_000, 2_000, 1_000];
+const PRESETS_USD = [100, 50, 25, 10, 5, 2];
+const SUGGESTED_FCFA = 5_000;
+const SUGGESTED_USD = 10;
+
+const fmtFCFA = (n: number) => new Intl.NumberFormat("fr-FR").format(n);
+const fmtUSD = (n: number) =>
+  new Intl.NumberFormat("en-US", { minimumFractionDigits: n % 1 === 0 ? 0 : 2, maximumFractionDigits: 2 }).format(n);
 
 function Donate() {
   const [amount, setAmount] = useState<number>(SUGGESTED);
