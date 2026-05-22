@@ -32,23 +32,56 @@ function Campaign() {
 
   const presets = [2000, 5000, 10000, 25000, 50000];
 
+  const scrollToDonate = () => {
+    document.getElementById("donate")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: "Hands & Hearts for Philip (HHP)",
+      text: "Help Philip recover — every contribution counts.",
+      url: typeof window !== "undefined" ? window.location.href : "",
+    };
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share(shareData);
+      } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(shareData.url);
+        alert("Link copied to clipboard");
+      }
+    } catch {
+      /* user cancelled */
+    }
+  };
+
+  const handleDonate = () => {
+    const value = typeof amount === "number" && amount > 0 ? amount : 0;
+    alert(
+      value > 0
+        ? `Thanks! You'll be redirected to MTN Mobile Money to complete a ${fmt(value)} FCFA donation.`
+        : "Please choose or enter an amount first.",
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#f7f7f5] text-neutral-900">
       {/* Top bar */}
       <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/85 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <a href="#" className="flex items-center gap-2 font-semibold tracking-tight">
+          <a href="/" className="flex items-center gap-2 font-semibold tracking-tight">
             <span className="grid size-7 place-items-center rounded-full bg-[#02a95c] text-white">
               <Heart className="size-3.5 fill-white" />
             </span>
             <span>givehope</span>
           </a>
           <nav className="hidden items-center gap-6 text-sm text-neutral-600 md:flex">
-            <a href="#" className="hover:text-neutral-900">Search</a>
-            <a href="#" className="hover:text-neutral-900">Start a fundraiser</a>
-            <a href="#" className="hover:text-neutral-900">Sign in</a>
+            <button onClick={scrollToDonate} className="hover:text-neutral-900">Donate</button>
+            <button onClick={handleShare} className="hover:text-neutral-900">Share</button>
           </nav>
-          <button className="rounded-full bg-[#02a95c] px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#028f4e]">
+          <button
+            onClick={scrollToDonate}
+            className="rounded-full bg-[#02a95c] px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#028f4e]"
+          >
             Donate
           </button>
         </div>
