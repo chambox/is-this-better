@@ -178,7 +178,7 @@ function Donate() {
             </div>
             <div>
               <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-neutral-900 sm:text-[34px]">
-                Just <span className="text-[#02a95c]">{fmt(remaining)} FCFA</span> to go!
+                Just <span className="text-[#02a95c]">{fmt(remainingDisplay)} {currency}</span> to go!
               </h1>
               <p className="mt-1 text-lg font-bold text-neutral-900">Make an impact.</p>
               <p className="mt-1 text-sm text-neutral-600">
