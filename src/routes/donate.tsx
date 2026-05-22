@@ -25,6 +25,18 @@ function Donate() {
   const [amount, setAmount] = useState<number>(SUGGESTED);
   const [custom, setCustom] = useState<string>("");
   const [method, setMethod] = useState<"mtn" | "orange" | "stripe" | "paypal">("stripe");
+  const isMobileMoney = method === "mtn" || method === "orange";
+  const isCard = method === "stripe";
+  const isPayPal = method === "paypal";
+  const isIntl = isCard || isPayPal;
+
+  const currency = isIntl ? "USD" : "FCFA";
+  const presets = isIntl ? PRESETS_USD : PRESETS_FCFA;
+  const suggested = isIntl ? SUGGESTED_USD : SUGGESTED_FCFA;
+  const fmt = (n: number) => (isIntl ? fmtUSD(n) : fmtFCFA(n));
+
+  const [amount, setAmount] = useState<number>(SUGGESTED_FCFA);
+  const [custom, setCustom] = useState<string>("");
   const [frequency, setFrequency] = useState<"once" | "monthly">("once");
   const [name, setName] = useState("");
   const [anonymous, setAnonymous] = useState(false);
@@ -36,22 +48,8 @@ function Donate() {
   const [comment, setComment] = useState("");
 
   const remaining = Math.max(0, GOAL - RAISED);
+  const remainingDisplay = isIntl ? remaining / USD_RATE : remaining;
   const percent = useMemo(() => Math.min(100, (RAISED / GOAL) * 100), []);
-
-  const R = 28;
-  const C = 2 * Math.PI * R;
-  const offset = C - (percent / 100) * C;
-
-  const effective = custom ? Number(custom) || 0 : amount;
-
-  const handleAmount = (v: number) => {
-    setAmount(v);
-    setCustom("");
-  };
-
-  const isMobileMoney = method === "mtn" || method === "orange";
-  const isCard = method === "stripe";
-  const isPayPal = method === "paypal";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
