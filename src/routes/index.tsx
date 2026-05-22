@@ -213,10 +213,10 @@ function Campaign() {
               </div>
 
               <div className="mt-5 space-y-2">
-                <button className="flex w-full items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white py-3 text-sm font-semibold hover:bg-neutral-50">
+                <button onClick={handleShare} className="flex w-full items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white py-3 text-sm font-semibold hover:bg-neutral-50">
                   <Share2 className="size-4" /> Share
                 </button>
-                <button className="flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#028f4e]">
+                <button onClick={handleDonate} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#028f4e]">
                   <Heart className="size-4 fill-white" /> Donate now
                 </button>
               </div>
