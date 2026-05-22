@@ -210,9 +210,9 @@ function Donate() {
                 Enter your donation
               </h2>
               <div className="grid grid-cols-3 gap-3">
-                {PRESETS.map((v) => {
+                {presets.map((v: number) => {
                   const selected = !custom && amount === v;
-                  const suggested = v === SUGGESTED;
+                  const isSuggested = v === suggested;
                   return (
                     <button
                       key={v}
