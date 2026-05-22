@@ -82,7 +82,7 @@ function Donate() {
         return;
       }
       alert(
-        `Thanks${anonymous ? "" : `, ${name}`}! You'll receive a ${method === "mtn" ? "MTN MoMo" : "Orange Money"} prompt on ${phone} for ${fmt(effective)} FCFA.`,
+        `Thanks${anonymous ? "" : `, ${name}`}! You'll receive a ${method === "mtn" ? "MTN MoMo" : "Orange Money"} prompt on ${phone} for ${fmt(effective)} ${currency}.`,
       );
       return;
     }
@@ -92,7 +92,7 @@ function Donate() {
         return;
       }
       alert(
-        `Thanks${anonymous ? "" : `, ${name}`}! You'll be redirected to PayPal to complete your donation of ${fmt(effective)} FCFA.`,
+        `Thanks${anonymous ? "" : `, ${name}`}! You'll be redirected to PayPal to complete your donation of ${fmt(effective)} ${currency}.`,
       );
       return;
     }
@@ -110,7 +110,7 @@ function Donate() {
         return;
       }
       alert(
-        `Thanks${anonymous ? "" : `, ${name}`}! Your card donation of ${fmt(effective)} FCFA has been processed.`,
+        `Thanks${anonymous ? "" : `, ${name}`}! Your card donation of ${fmt(effective)} ${currency} has been processed.`,
       );
     }
   };
