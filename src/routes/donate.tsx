@@ -9,15 +9,32 @@ export const Route = createFileRoute("/donate")({
 const GOAL = 2_000_000;
 const RAISED = 500;
 
-const PRESETS = [50_000, 25_000, 10_000, 5_000, 2_000, 1_000];
-const SUGGESTED = 5_000;
+// FX: 1 USD ≈ 600 FCFA
+const USD_RATE = 600;
 
-const fmt = (n: number) => new Intl.NumberFormat("fr-FR").format(n);
+const PRESETS_FCFA = [50_000, 25_000, 10_000, 5_000, 2_000, 1_000];
+const PRESETS_USD = [100, 50, 25, 10, 5, 2];
+const SUGGESTED_FCFA = 5_000;
+const SUGGESTED_USD = 10;
+
+const fmtFCFA = (n: number) => new Intl.NumberFormat("fr-FR").format(n);
+const fmtUSD = (n: number) =>
+  new Intl.NumberFormat("en-US", { minimumFractionDigits: n % 1 === 0 ? 0 : 2, maximumFractionDigits: 2 }).format(n);
 
 function Donate() {
-  const [amount, setAmount] = useState<number>(SUGGESTED);
-  const [custom, setCustom] = useState<string>("");
   const [method, setMethod] = useState<"mtn" | "orange" | "stripe" | "paypal">("stripe");
+  const isMobileMoney = method === "mtn" || method === "orange";
+  const isCard = method === "stripe";
+  const isPayPal = method === "paypal";
+  const isIntl = isCard || isPayPal;
+
+  const currency = isIntl ? "USD" : "FCFA";
+  const presets = isIntl ? PRESETS_USD : PRESETS_FCFA;
+  const suggested = isIntl ? SUGGESTED_USD : SUGGESTED_FCFA;
+  const fmt = (n: number) => (isIntl ? fmtUSD(n) : fmtFCFA(n));
+
+  const [amount, setAmount] = useState<number>(SUGGESTED_FCFA);
+  const [custom, setCustom] = useState<string>("");
   const [frequency, setFrequency] = useState<"once" | "monthly">("once");
   const [name, setName] = useState("");
   const [anonymous, setAnonymous] = useState(false);
@@ -28,23 +45,26 @@ function Donate() {
   const [cardCvc, setCardCvc] = useState("");
   const [comment, setComment] = useState("");
 
+  // Reset amount when switching between FCFA and USD methods
+  const prevIntlRef = (Donate as any)._prevIntl;
+  if (prevIntlRef !== isIntl) {
+    (Donate as any)._prevIntl = isIntl;
+  }
+
   const remaining = Math.max(0, GOAL - RAISED);
+  const remainingDisplay = isIntl ? Math.ceil(remaining / USD_RATE) : remaining;
   const percent = useMemo(() => Math.min(100, (RAISED / GOAL) * 100), []);
 
   const R = 28;
   const C = 2 * Math.PI * R;
   const offset = C - (percent / 100) * C;
 
-  const effective = custom ? Number(custom) || 0 : amount;
+  const effective = custom ? Number(custom) || 0 : (presets.includes(amount) ? amount : suggested);
 
   const handleAmount = (v: number) => {
     setAmount(v);
     setCustom("");
   };
-
-  const isMobileMoney = method === "mtn" || method === "orange";
-  const isCard = method === "stripe";
-  const isPayPal = method === "paypal";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +82,7 @@ function Donate() {
         return;
       }
       alert(
-        `Thanks${anonymous ? "" : `, ${name}`}! You'll receive a ${method === "mtn" ? "MTN MoMo" : "Orange Money"} prompt on ${phone} for ${fmt(effective)} FCFA.`,
+        `Thanks${anonymous ? "" : `, ${name}`}! You'll receive a ${method === "mtn" ? "MTN MoMo" : "Orange Money"} prompt on ${phone} for ${fmt(effective)} ${currency}.`,
       );
       return;
     }
@@ -72,7 +92,7 @@ function Donate() {
         return;
       }
       alert(
-        `Thanks${anonymous ? "" : `, ${name}`}! You'll be redirected to PayPal to complete your donation of ${fmt(effective)} FCFA.`,
+        `Thanks${anonymous ? "" : `, ${name}`}! You'll be redirected to PayPal to complete your donation of ${fmt(effective)} ${currency}.`,
       );
       return;
     }
@@ -90,7 +110,7 @@ function Donate() {
         return;
       }
       alert(
-        `Thanks${anonymous ? "" : `, ${name}`}! Your card donation of ${fmt(effective)} FCFA has been processed.`,
+        `Thanks${anonymous ? "" : `, ${name}`}! Your card donation of ${fmt(effective)} ${currency} has been processed.`,
       );
     }
   };
@@ -158,7 +178,7 @@ function Donate() {
             </div>
             <div>
               <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-neutral-900 sm:text-[34px]">
-                Just <span className="text-[#02a95c]">{fmt(remaining)} FCFA</span> to go!
+                Just <span className="text-[#02a95c]">{fmt(remainingDisplay)} {currency}</span> to go!
               </h1>
               <p className="mt-1 text-lg font-bold text-neutral-900">Make an impact.</p>
               <p className="mt-1 text-sm text-neutral-600">
@@ -190,9 +210,9 @@ function Donate() {
                 Enter your donation
               </h2>
               <div className="grid grid-cols-3 gap-3">
-                {PRESETS.map((v) => {
+                {presets.map((v: number) => {
                   const selected = !custom && amount === v;
-                  const suggested = v === SUGGESTED;
+                  const isSuggested = v === suggested;
                   return (
                     <button
                       key={v}
@@ -205,7 +225,7 @@ function Donate() {
                       }`}
                     >
                       {fmt(v)}
-                      {suggested && (
+                      {isSuggested && (
                         <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#c2f17a] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-neutral-900">
                           ♥ Suggested
                         </span>
@@ -217,7 +237,7 @@ function Donate() {
 
               <div className="mt-6 rounded-xl border-2 border-neutral-300 px-5 py-4 focus-within:border-neutral-900">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-extrabold text-neutral-900">FCFA</span>
+                  <span className="text-3xl font-extrabold text-neutral-900">{currency}</span>
                   <input
                     inputMode="numeric"
                     placeholder="0"
@@ -396,9 +416,14 @@ function Donate() {
                   Your donation
                 </span>
                 <span className="text-2xl font-extrabold tracking-tight text-neutral-900">
-                  {fmt(effective)} <span className="text-sm font-bold text-neutral-500">FCFA</span>
+                  {fmt(effective)} <span className="text-sm font-bold text-neutral-500">{currency}</span>
                 </span>
               </div>
+              {isIntl && (
+                <p className="mt-1 text-[11px] text-neutral-500">
+                  ≈ {fmtFCFA(Math.round(effective * USD_RATE))} FCFA at today&apos;s rate
+                </p>
+              )}
               <p className="mt-1 text-xs text-neutral-500">
                 {frequency === "monthly" ? "Billed monthly until cancelled." : "One-time donation."}
               </p>
