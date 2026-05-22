@@ -165,10 +165,10 @@ function Campaign() {
 
             {/* Action buttons (mobile) */}
             <div className="mt-6 flex gap-3 lg:hidden">
-              <button className="flex flex-1 items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white py-3 text-sm font-semibold hover:bg-neutral-50">
+              <button onClick={handleShare} className="flex flex-1 items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white py-3 text-sm font-semibold hover:bg-neutral-50">
                 <Share2 className="size-4" /> Share
               </button>
-              <button className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white hover:bg-[#028f4e]">
+              <button onClick={scrollToDonate} className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white hover:bg-[#028f4e]">
                 <Heart className="size-4 fill-white" /> Donate
               </button>
             </div>
@@ -185,13 +185,16 @@ function Campaign() {
               </p>
             </div>
 
-            <button className="mt-6 inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-700">
+            <button
+              onClick={() => alert("Thanks for flagging — our team will review this fundraiser.")}
+              className="mt-6 inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-700"
+            >
               <Flag className="size-4" /> Report fundraiser
             </button>
           </section>
 
           {/* Right column - donate card */}
-          <aside className="lg:sticky lg:top-20 lg:self-start">
+          <aside id="donate" className="lg:sticky lg:top-20 lg:self-start scroll-mt-20">
             <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
               <div className="mb-4">
                 <p className="text-2xl font-bold text-neutral-900">
