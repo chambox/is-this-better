@@ -416,9 +416,14 @@ function Donate() {
                   Your donation
                 </span>
                 <span className="text-2xl font-extrabold tracking-tight text-neutral-900">
-                  {fmt(effective)} <span className="text-sm font-bold text-neutral-500">FCFA</span>
+                  {fmt(effective)} <span className="text-sm font-bold text-neutral-500">{currency}</span>
                 </span>
               </div>
+              {isIntl && (
+                <p className="mt-1 text-[11px] text-neutral-500">
+                  ≈ {fmtFCFA(Math.round(effective * USD_RATE))} FCFA at today&apos;s rate
+                </p>
+              )}
               <p className="mt-1 text-xs text-neutral-500">
                 {frequency === "monthly" ? "Billed monthly until cancelled." : "One-time donation."}
               </p>
