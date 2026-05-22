@@ -284,7 +284,10 @@ function Campaign() {
                     </li>
                   ))}
                 </ul>
-                <button className="mt-4 w-full rounded-full border border-neutral-300 bg-white py-2 text-sm font-semibold hover:bg-neutral-50">
+                <button
+                  onClick={() => alert("Full donor list coming soon.")}
+                  className="mt-4 w-full rounded-full border border-neutral-300 bg-white py-2 text-sm font-semibold hover:bg-neutral-50"
+                >
                   See all
                 </button>
               </div>
@@ -302,7 +305,7 @@ function Campaign() {
 
       {/* Sticky mobile CTA */}
       <div className="sticky bottom-0 z-30 border-t border-neutral-200 bg-white/95 p-3 backdrop-blur lg:hidden">
-        <button className="flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white shadow-sm">
+        <button onClick={handleDonate} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3 text-sm font-semibold text-white shadow-sm">
           <Heart className="size-4 fill-white" /> Donate now
         </button>
       </div>
