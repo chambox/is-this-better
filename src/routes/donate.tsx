@@ -46,6 +46,9 @@ function Donate() {
   const RAISED = campaign?.raised ?? 0;
 
   const [method, setMethod] = useState<"mtn" | "orange" | "stripe" | "paypal">("stripe");
+  const isMobileMoney = method === "mtn" || method === "orange";
+  const isCard = method === "stripe";
+  const isPayPal = method === "paypal";
   const isIntl = isCard || isPayPal;
 
   // Currency: auto-detected on mount, then enforced by payment method (mobile money = FCFA only, card/paypal = USD only).
