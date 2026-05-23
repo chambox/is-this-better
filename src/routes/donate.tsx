@@ -1,14 +1,17 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, CreditCard, Heart, Lock, ShieldCheck, Smartphone } from "lucide-react";
 import { toast } from "sonner";
+import { addDonation, useCampaign } from "@/lib/campaigns";
+
+type DonateSearch = { c?: string };
 
 export const Route = createFileRoute("/donate")({
+  validateSearch: (s: Record<string, unknown>): DonateSearch => ({
+    c: typeof s.c === "string" ? s.c : undefined,
+  }),
   component: Donate,
 });
-
-const GOAL = 2_000_000;
-const RAISED = 500;
 
 // FX: 1 USD ≈ 600 FCFA
 const USD_RATE = 600;
