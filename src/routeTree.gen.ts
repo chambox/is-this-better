@@ -12,8 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThanksRouteImport } from './routes/thanks'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as DonateRouteImport } from './routes/donate'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as DonateRouteImport } from './routes/donate'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
 
@@ -32,14 +32,14 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DonateRoute = DonateRouteImport.update({
-  id: '/donate',
-  path: '/donate',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonateRoute = DonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -55,8 +55,8 @@ const CSlugRoute = CSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/donate': typeof DonateRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
@@ -64,8 +64,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/donate': typeof DonateRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
@@ -74,8 +74,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
   '/donate': typeof DonateRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
@@ -83,38 +83,16 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/dashboard'
-    | '/donate'
-    | '/login'
-    | '/start'
-    | '/thanks'
-    | '/c/$slug'
+  fullPaths: '/' | '/donate' | '/dashboard' | '/login' | '/start' | '/thanks' | '/c/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/dashboard'
-    | '/donate'
-    | '/login'
-    | '/start'
-    | '/thanks'
-    | '/c/$slug'
-  id:
-    | '__root__'
-    | '/'
-    | '/dashboard'
-    | '/donate'
-    | '/login'
-    | '/start'
-    | '/thanks'
-    | '/c/$slug'
+  to: '/' | '/donate' | '/dashboard' | '/login' | '/start' | '/thanks' | '/c/$slug'
+  id: '__root__' | '/' | '/donate' | '/dashboard' | '/login' | '/start' | '/thanks' | '/c/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
   DonateRoute: typeof DonateRoute
+  DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
   StartRoute: typeof StartRoute
   ThanksRoute: typeof ThanksRoute
@@ -144,18 +122,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/donate': {
-      id: '/donate'
-      path: '/donate'
-      fullPath: '/donate'
-      preLoaderRoute: typeof DonateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donate': {
+      id: '/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof DonateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -177,8 +155,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
   DonateRoute: DonateRoute,
+  DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
   StartRoute: StartRoute,
   ThanksRoute: ThanksRoute,
@@ -187,13 +165,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
