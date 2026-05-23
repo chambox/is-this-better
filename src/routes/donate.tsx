@@ -158,6 +158,8 @@ function Donate() {
         method === "mtn" ? "MTN MoMo" :
         method === "orange" ? "Orange Money" :
         method === "stripe" ? "Card" : "PayPal";
+      const amountFCFA = isIntl ? Math.round(effective * USD_RATE) : effective;
+      if (campaign) addDonation(campaign.slug, amountFCFA, anonymous ? undefined : name.trim() || undefined);
       navigate({
         to: "/thanks",
         search: {
@@ -165,6 +167,7 @@ function Donate() {
           currency,
           name: anonymous ? undefined : name.trim() || undefined,
           method: methodLabel,
+          c: campaign?.slug,
         },
       });
     }, 700);
