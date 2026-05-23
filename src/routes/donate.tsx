@@ -210,9 +210,9 @@ function Donate() {
           </Link>
           <div className="ml-auto hidden text-sm text-neutral-700 sm:block">
             Already have an account?{" "}
-            <button className="font-semibold text-[#02a95c] underline underline-offset-2 hover:text-[#028f4e]">
+            <Link to="/login" className="font-semibold text-[#02a95c] underline underline-offset-2 hover:text-[#028f4e]">
               Sign in
-            </button>
+            </Link>
           </div>
         </div>
       </header>
