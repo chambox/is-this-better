@@ -10,12 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThanksRouteImport } from './routes/thanks'
+import { Route as StartRouteImport } from './routes/start'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CSlugRouteImport } from './routes/c.$slug'
 
 const ThanksRoute = ThanksRouteImport.update({
   id: '/thanks',
   path: '/thanks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StartRoute = StartRouteImport.update({
+  id: '/start',
+  path: '/start',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DonateRoute = DonateRouteImport.update({
@@ -28,35 +35,48 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CSlugRoute = CSlugRouteImport.update({
+  id: '/c/$slug',
+  path: '/c/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
+  '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
+  '/c/$slug': typeof CSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
+  '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
+  '/c/$slug': typeof CSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
+  '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
+  '/c/$slug': typeof CSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/donate' | '/thanks'
+  fullPaths: '/' | '/donate' | '/start' | '/thanks' | '/c/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/donate' | '/thanks'
-  id: '__root__' | '/' | '/donate' | '/thanks'
+  to: '/' | '/donate' | '/start' | '/thanks' | '/c/$slug'
+  id: '__root__' | '/' | '/donate' | '/start' | '/thanks' | '/c/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DonateRoute: typeof DonateRoute
+  StartRoute: typeof StartRoute
   ThanksRoute: typeof ThanksRoute
+  CSlugRoute: typeof CSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/thanks'
       fullPath: '/thanks'
       preLoaderRoute: typeof ThanksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/start': {
+      id: '/start'
+      path: '/start'
+      fullPath: '/start'
+      preLoaderRoute: typeof StartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/donate': {
@@ -82,13 +109,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/c/$slug': {
+      id: '/c/$slug'
+      path: '/c/$slug'
+      fullPath: '/c/$slug'
+      preLoaderRoute: typeof CSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DonateRoute: DonateRoute,
+  StartRoute: StartRoute,
   ThanksRoute: ThanksRoute,
+  CSlugRoute: CSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

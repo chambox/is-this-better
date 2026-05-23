@@ -1,14 +1,17 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, CreditCard, Heart, Lock, ShieldCheck, Smartphone } from "lucide-react";
 import { toast } from "sonner";
+import { addDonation, useCampaign } from "@/lib/campaigns";
+
+type DonateSearch = { c?: string };
 
 export const Route = createFileRoute("/donate")({
+  validateSearch: (s: Record<string, unknown>): DonateSearch => ({
+    c: typeof s.c === "string" ? s.c : undefined,
+  }),
   component: Donate,
 });
-
-const GOAL = 2_000_000;
-const RAISED = 500;
 
 // FX: 1 USD ≈ 600 FCFA
 const USD_RATE = 600;
@@ -36,6 +39,11 @@ type Errors = Partial<Record<"amount" | "name" | "phone" | "email" | "cardNumber
 
 function Donate() {
   const navigate = useNavigate();
+  const { c: campaignSlug } = useSearch({ from: "/donate" });
+  const campaign = useCampaign(campaignSlug || "philip-recovery");
+
+  const GOAL = campaign?.goal ?? 2_000_000;
+  const RAISED = campaign?.raised ?? 0;
 
   const [method, setMethod] = useState<"mtn" | "orange" | "stripe" | "paypal">("stripe");
   const isMobileMoney = method === "mtn" || method === "orange";
@@ -150,6 +158,8 @@ function Donate() {
         method === "mtn" ? "MTN MoMo" :
         method === "orange" ? "Orange Money" :
         method === "stripe" ? "Card" : "PayPal";
+      const amountFCFA = isIntl ? Math.round(effective * USD_RATE) : effective;
+      if (campaign) addDonation(campaign.slug, amountFCFA, anonymous ? undefined : name.trim() || undefined);
       navigate({
         to: "/thanks",
         search: {
@@ -157,6 +167,7 @@ function Donate() {
           currency,
           name: anonymous ? undefined : name.trim() || undefined,
           method: methodLabel,
+          c: campaign?.slug,
         },
       });
     }, 700);
@@ -180,9 +191,15 @@ function Donate() {
     <div className="min-h-screen bg-[#f3f3f1] pb-28 text-neutral-900 sm:pb-0">
       <header className="border-b border-neutral-200 bg-white">
         <div className="mx-auto flex h-16 max-w-6xl items-center px-4 sm:px-6">
-          <Link to="/" className="inline-flex items-center gap-1 text-sm font-medium text-neutral-700 hover:text-neutral-900">
-            <ChevronLeft className="size-4" /> Fundraiser
-          </Link>
+          {campaign ? (
+            <Link to="/c/$slug" params={{ slug: campaign.slug }} className="inline-flex items-center gap-1 text-sm font-medium text-neutral-700 hover:text-neutral-900">
+              <ChevronLeft className="size-4" /> Back to fundraiser
+            </Link>
+          ) : (
+            <Link to="/" className="inline-flex items-center gap-1 text-sm font-medium text-neutral-700 hover:text-neutral-900">
+              <ChevronLeft className="size-4" /> Browse
+            </Link>
+          )}
           <Link to="/" className="absolute left-1/2 flex -translate-x-1/2 items-center gap-1.5">
             <span className="grid size-7 place-items-center rounded-full bg-[#02a95c]">
               <Heart className="size-3.5 fill-white text-white" />
@@ -230,8 +247,8 @@ function Donate() {
               <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-neutral-900 sm:text-[34px]">
                 Just <span className="text-[#02a95c]">{fmt(remainingDisplay)} {currency}</span> to go!
               </h1>
-              <p className="mt-1 text-lg font-bold text-neutral-900">Make an impact.</p>
-              <p className="mt-1 text-sm text-neutral-600">Hands &amp; Hearts for Philip (HHP)</p>
+              <p className="mt-1 text-lg font-bold text-neutral-900">{campaign?.title ?? "Make an impact."}</p>
+              <p className="mt-1 text-sm text-neutral-600">{campaign?.organizer ?? "givehope community"}</p>
             </div>
           </div>
 
