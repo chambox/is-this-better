@@ -191,6 +191,7 @@ export function createCampaign(input: {
     goal: input.goal,
     raised: 0,
     organizer: input.organizer.trim(),
+    ownerId: getCurrentUser()?.id ?? "anon",
     location: input.location.trim(),
     category: input.category,
     image: input.image?.trim() || "",
