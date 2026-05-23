@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThanksRouteImport } from './routes/thanks'
 import { Route as StartRouteImport } from './routes/start'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
@@ -23,6 +24,11 @@ const ThanksRoute = ThanksRouteImport.update({
 const StartRoute = StartRouteImport.update({
   id: '/start',
   path: '/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DonateRoute = DonateRouteImport.update({
@@ -44,6 +50,7 @@ const CSlugRoute = CSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
+  '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
   '/c/$slug': typeof CSlugRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
+  '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
   '/c/$slug': typeof CSlugRoute
@@ -59,21 +67,30 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
+  '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
   '/c/$slug': typeof CSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/donate' | '/start' | '/thanks' | '/c/$slug'
+  fullPaths: '/' | '/donate' | '/login' | '/start' | '/thanks' | '/c/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/donate' | '/start' | '/thanks' | '/c/$slug'
-  id: '__root__' | '/' | '/donate' | '/start' | '/thanks' | '/c/$slug'
+  to: '/' | '/donate' | '/login' | '/start' | '/thanks' | '/c/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/donate'
+    | '/login'
+    | '/start'
+    | '/thanks'
+    | '/c/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DonateRoute: typeof DonateRoute
+  LoginRoute: typeof LoginRoute
   StartRoute: typeof StartRoute
   ThanksRoute: typeof ThanksRoute
   CSlugRoute: typeof CSlugRoute
@@ -93,6 +110,13 @@ declare module '@tanstack/react-router' {
       path: '/start'
       fullPath: '/start'
       preLoaderRoute: typeof StartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/donate': {
@@ -122,6 +146,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DonateRoute: DonateRoute,
+  LoginRoute: LoginRoute,
   StartRoute: StartRoute,
   ThanksRoute: ThanksRoute,
   CSlugRoute: CSlugRoute,
@@ -129,3 +154,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
