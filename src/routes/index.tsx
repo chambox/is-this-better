@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Heart, Search, MapPin, Users, Plus, TrendingUp, ArrowRight } from "lucide-react";
+import { Heart, Search, MapPin, Users, Plus, TrendingUp, ArrowRight, LayoutDashboard } from "lucide-react";
 import { CATEGORIES, fmtFCFA, useCampaigns } from "@/lib/campaigns";
+import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/")({
   head: () => ({
