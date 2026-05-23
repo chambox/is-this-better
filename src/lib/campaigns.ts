@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { DEMO_USER, getCurrentUser } from "./auth";
 
 export type CampaignUpdate = { date: string; title: string; body: string };
 export type CampaignDonor = { name: string; amount: number; time: string; avatar: string };
@@ -10,6 +11,7 @@ export type Campaign = {
   goal: number; // FCFA
   raised: number; // FCFA
   organizer: string;
+  ownerId: string; // user id of the creator
   location: string;
   category: string;
   image: string; // URL (optional)
@@ -18,7 +20,7 @@ export type Campaign = {
   donors: CampaignDonor[];
 };
 
-const STORAGE_KEY = "givehope:campaigns:v1";
+const STORAGE_KEY = "givehope:campaigns:v2";
 
 const SEED: Campaign[] = [
   {
@@ -29,6 +31,7 @@ const SEED: Campaign[] = [
     goal: 2_000_000,
     raised: 500,
     organizer: "Hands & Hearts for Philip (HHP)",
+    ownerId: DEMO_USER.id,
     location: "Douala, Cameroon",
     category: "Medical",
     image: "",
@@ -54,6 +57,7 @@ const SEED: Campaign[] = [
     goal: 450_000,
     raised: 187_000,
     organizer: "Friends of Amina",
+    ownerId: DEMO_USER.id,
     location: "Yaoundé, Cameroon",
     category: "Education",
     image: "",
@@ -75,6 +79,7 @@ const SEED: Campaign[] = [
     goal: 5_000_000,
     raised: 1_240_000,
     organizer: "Coastal Community Network",
+    ownerId: DEMO_USER.id,
     location: "Kribi, Cameroon",
     category: "Emergency",
     image: "",
@@ -95,6 +100,7 @@ const SEED: Campaign[] = [
     goal: 800_000,
     raised: 312_000,
     organizer: "FC Espoir Douala",
+    ownerId: DEMO_USER.id,
     location: "Douala, Cameroon",
     category: "Sports",
     image: "",
@@ -189,6 +195,7 @@ export function createCampaign(input: {
     goal: input.goal,
     raised: 0,
     organizer: input.organizer.trim(),
+    ownerId: getCurrentUser()?.id ?? "anon",
     location: input.location.trim(),
     category: input.category,
     image: input.image?.trim() || "",
@@ -242,3 +249,30 @@ export function useCampaign(slug: string): Campaign | undefined {
 }
 
 export const fmtFCFA = (n: number) => new Intl.NumberFormat("fr-FR").format(n);
+
+export function useMyCampaigns(userId: string | undefined): Campaign[] {
+  const all = useCampaigns();
+  if (!userId) return [];
+  return all.filter((c) => c.ownerId === userId);
+}
+
+export function postUpdate(slug: string, title: string, body: string): void {
+  const all = load();
+  const idx = all.findIndex((c) => c.slug === slug);
+  if (idx < 0) return;
+  const update: CampaignUpdate = { date: "just now", title: title.trim(), body: body.trim() };
+  cache = [
+    ...all.slice(0, idx),
+    { ...all[idx], updates: [update, ...all[idx].updates] },
+    ...all.slice(idx + 1),
+  ];
+  persist();
+  emit();
+}
+
+export function deleteCampaign(slug: string): void {
+  const all = load();
+  cache = all.filter((c) => c.slug !== slug);
+  persist();
+  emit();
+}

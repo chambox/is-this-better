@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Heart, Search, MapPin, Users, Plus, TrendingUp, ArrowRight } from "lucide-react";
+import { Heart, Search, MapPin, Users, Plus, TrendingUp, ArrowRight, LayoutDashboard } from "lucide-react";
 import { CATEGORIES, fmtFCFA, useCampaigns } from "@/lib/campaigns";
+import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Browse() {
+  const user = useAuth();
   const campaigns = useCampaigns();
   const [query, setQuery] = useState("");
   const [activeCat, setActiveCat] = useState<string>("All");
@@ -47,7 +49,21 @@ function Browse() {
             </span>
             <span className="text-lg font-extrabold tracking-tight">givehope</span>
           </Link>
-          <div className="ml-auto flex items-center gap-3">
+          <div className="ml-auto flex items-center gap-2 sm:gap-3">
+            {user ? (
+              <>
+                <Link to="/dashboard" className="hidden items-center gap-1.5 rounded-full border border-neutral-200 px-3 py-1.5 text-sm font-bold text-neutral-700 hover:bg-neutral-50 sm:inline-flex">
+                  <LayoutDashboard className="size-3.5" /> Dashboard
+                </Link>
+                <Link to="/dashboard" className="grid size-9 place-items-center rounded-full bg-[#02a95c] text-sm font-extrabold text-white" title={user.name}>
+                  {user.avatar}
+                </Link>
+              </>
+            ) : (
+              <Link to="/login" className="hidden text-sm font-bold text-neutral-700 hover:text-neutral-900 sm:inline">
+                Sign in
+              </Link>
+            )}
             <Link to="/start" className="inline-flex items-center gap-1.5 rounded-full bg-[#02a95c] px-4 py-1.5 text-sm font-extrabold text-white transition hover:bg-[#028f4e]">
               <Plus className="size-3.5" /> Start a fundraiser
             </Link>

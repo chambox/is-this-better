@@ -1,8 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, Heart, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { CATEGORIES, createCampaign } from "@/lib/campaigns";
+import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/start")({
   head: () => ({
@@ -18,6 +19,7 @@ type Errors = Partial<Record<"title" | "story" | "goal" | "organizer" | "locatio
 
 function StartPage() {
   const navigate = useNavigate();
+  const user = useAuth();
   const [title, setTitle] = useState("");
   const [story, setStory] = useState("");
   const [goal, setGoal] = useState<string>("");
@@ -27,6 +29,15 @@ function StartPage() {
   const [image, setImage] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (user === null) {
+      toast.info("Sign in to start a fundraiser");
+      navigate({ to: "/login" });
+    } else if (user && !organizer) {
+      setOrganizer(user.name);
+    }
+  }, [user, navigate, organizer]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

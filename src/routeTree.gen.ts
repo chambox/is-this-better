@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThanksRouteImport } from './routes/thanks'
 import { Route as StartRouteImport } from './routes/start'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as DonateRouteImport } from './routes/donate'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
 
@@ -25,9 +27,19 @@ const StartRoute = StartRouteImport.update({
   path: '/start',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DonateRoute = DonateRouteImport.update({
   id: '/donate',
   path: '/donate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -43,14 +55,18 @@ const CSlugRoute = CSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/donate': typeof DonateRoute
+  '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
   '/c/$slug': typeof CSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/donate': typeof DonateRoute
+  '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
   '/c/$slug': typeof CSlugRoute
@@ -58,22 +74,48 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
   '/donate': typeof DonateRoute
+  '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
   '/c/$slug': typeof CSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/donate' | '/start' | '/thanks' | '/c/$slug'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/donate'
+    | '/login'
+    | '/start'
+    | '/thanks'
+    | '/c/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/donate' | '/start' | '/thanks' | '/c/$slug'
-  id: '__root__' | '/' | '/donate' | '/start' | '/thanks' | '/c/$slug'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/donate'
+    | '/login'
+    | '/start'
+    | '/thanks'
+    | '/c/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/donate'
+    | '/login'
+    | '/start'
+    | '/thanks'
+    | '/c/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
   DonateRoute: typeof DonateRoute
+  LoginRoute: typeof LoginRoute
   StartRoute: typeof StartRoute
   ThanksRoute: typeof ThanksRoute
   CSlugRoute: typeof CSlugRoute
@@ -95,11 +137,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StartRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/donate': {
       id: '/donate'
       path: '/donate'
       fullPath: '/donate'
       preLoaderRoute: typeof DonateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -121,7 +177,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
   DonateRoute: DonateRoute,
+  LoginRoute: LoginRoute,
   StartRoute: StartRoute,
   ThanksRoute: ThanksRoute,
   CSlugRoute: CSlugRoute,
