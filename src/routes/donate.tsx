@@ -191,9 +191,15 @@ function Donate() {
     <div className="min-h-screen bg-[#f3f3f1] pb-28 text-neutral-900 sm:pb-0">
       <header className="border-b border-neutral-200 bg-white">
         <div className="mx-auto flex h-16 max-w-6xl items-center px-4 sm:px-6">
-          <Link to="/" className="inline-flex items-center gap-1 text-sm font-medium text-neutral-700 hover:text-neutral-900">
-            <ChevronLeft className="size-4" /> Fundraiser
-          </Link>
+          {campaign ? (
+            <Link to="/c/$slug" params={{ slug: campaign.slug }} className="inline-flex items-center gap-1 text-sm font-medium text-neutral-700 hover:text-neutral-900">
+              <ChevronLeft className="size-4" /> Back to fundraiser
+            </Link>
+          ) : (
+            <Link to="/" className="inline-flex items-center gap-1 text-sm font-medium text-neutral-700 hover:text-neutral-900">
+              <ChevronLeft className="size-4" /> Browse
+            </Link>
+          )}
           <Link to="/" className="absolute left-1/2 flex -translate-x-1/2 items-center gap-1.5">
             <span className="grid size-7 place-items-center rounded-full bg-[#02a95c]">
               <Heart className="size-3.5 fill-white text-white" />
