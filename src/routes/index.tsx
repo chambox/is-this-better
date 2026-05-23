@@ -17,6 +17,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Browse() {
+  const user = useAuth();
   const campaigns = useCampaigns();
   const [query, setQuery] = useState("");
   const [activeCat, setActiveCat] = useState<string>("All");
