@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { DEMO_USER, getCurrentUser } from "./auth";
 
 export type CampaignUpdate = { date: string; title: string; body: string };
 export type CampaignDonor = { name: string; amount: number; time: string; avatar: string };
@@ -10,6 +11,7 @@ export type Campaign = {
   goal: number; // FCFA
   raised: number; // FCFA
   organizer: string;
+  ownerId: string; // user id of the creator
   location: string;
   category: string;
   image: string; // URL (optional)
@@ -18,7 +20,7 @@ export type Campaign = {
   donors: CampaignDonor[];
 };
 
-const STORAGE_KEY = "givehope:campaigns:v1";
+const STORAGE_KEY = "givehope:campaigns:v2";
 
 const SEED: Campaign[] = [
   {
