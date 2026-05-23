@@ -249,3 +249,30 @@ export function useCampaign(slug: string): Campaign | undefined {
 }
 
 export const fmtFCFA = (n: number) => new Intl.NumberFormat("fr-FR").format(n);
+
+export function useMyCampaigns(userId: string | undefined): Campaign[] {
+  const all = useCampaigns();
+  if (!userId) return [];
+  return all.filter((c) => c.ownerId === userId);
+}
+
+export function postUpdate(slug: string, title: string, body: string): void {
+  const all = load();
+  const idx = all.findIndex((c) => c.slug === slug);
+  if (idx < 0) return;
+  const update: CampaignUpdate = { date: "just now", title: title.trim(), body: body.trim() };
+  cache = [
+    ...all.slice(0, idx),
+    { ...all[idx], updates: [update, ...all[idx].updates] },
+    ...all.slice(idx + 1),
+  ];
+  persist();
+  emit();
+}
+
+export function deleteCampaign(slug: string): void {
+  const all = load();
+  cache = all.filter((c) => c.slug !== slug);
+  persist();
+  emit();
+}
