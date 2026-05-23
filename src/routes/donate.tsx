@@ -1,6 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, CreditCard, Heart, Lock, ShieldCheck, Smartphone } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/donate")({
   component: Donate,
@@ -21,19 +22,35 @@ const fmtFCFA = (n: number) => new Intl.NumberFormat("fr-FR").format(n);
 const fmtUSD = (n: number) =>
   new Intl.NumberFormat("en-US", { minimumFractionDigits: n % 1 === 0 ? 0 : 2, maximumFractionDigits: 2 }).format(n);
 
+// Guess preferred currency from browser locale. Cameroon / francophone Africa → FCFA, else USD.
+function guessIntlFromLocale(): boolean {
+  if (typeof navigator === "undefined") return false;
+  const locale = (navigator.language || "en-US").toLowerCase();
+  const FCFA_REGIONS = ["-cm", "-sn", "-ci", "-bj", "-bf", "-ml", "-ne", "-tg", "-ga", "-cg", "-cd", "-td", "-cf", "-gq"];
+  if (FCFA_REGIONS.some((r) => locale.endsWith(r))) return false;
+  if (locale.startsWith("fr")) return false; // default French speakers to FCFA for this campaign
+  return true;
+}
+
+type Errors = Partial<Record<"amount" | "name" | "phone" | "email" | "cardNumber" | "cardExpiry" | "cardCvc", string>>;
+
 function Donate() {
+  const navigate = useNavigate();
+
   const [method, setMethod] = useState<"mtn" | "orange" | "stripe" | "paypal">("stripe");
   const isMobileMoney = method === "mtn" || method === "orange";
   const isCard = method === "stripe";
   const isPayPal = method === "paypal";
   const isIntl = isCard || isPayPal;
 
+  // Currency: auto-detected on mount, then enforced by payment method (mobile money = FCFA only, card/paypal = USD only).
+  const [autoIntl] = useState<boolean>(() => guessIntlFromLocale());
   const currency = isIntl ? "USD" : "FCFA";
   const presets = isIntl ? PRESETS_USD : PRESETS_FCFA;
   const suggested = isIntl ? SUGGESTED_USD : SUGGESTED_FCFA;
   const fmt = (n: number) => (isIntl ? fmtUSD(n) : fmtFCFA(n));
 
-  const [amount, setAmount] = useState<number>(SUGGESTED_FCFA);
+  const [amount, setAmount] = useState<number>(autoIntl ? SUGGESTED_USD : SUGGESTED_FCFA);
   const [custom, setCustom] = useState<string>("");
   const [frequency, setFrequency] = useState<"once" | "monthly">("once");
   const [name, setName] = useState("");
@@ -44,12 +61,18 @@ function Donate() {
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCvc, setCardCvc] = useState("");
   const [comment, setComment] = useState("");
+  const [errors, setErrors] = useState<Errors>({});
+  const [submitting, setSubmitting] = useState(false);
 
   // Reset amount when switching between FCFA and USD methods
-  const prevIntlRef = (Donate as any)._prevIntl;
-  if (prevIntlRef !== isIntl) {
-    (Donate as any)._prevIntl = isIntl;
-  }
+  const prevIntl = useRef(isIntl);
+  useEffect(() => {
+    if (prevIntl.current !== isIntl) {
+      setAmount(isIntl ? SUGGESTED_USD : SUGGESTED_FCFA);
+      setCustom("");
+      prevIntl.current = isIntl;
+    }
+  }, [isIntl]);
 
   const remaining = Math.max(0, GOAL - RAISED);
   const remainingDisplay = isIntl ? Math.ceil(remaining / USD_RATE) : remaining;
@@ -64,55 +87,79 @@ function Donate() {
   const handleAmount = (v: number) => {
     setAmount(v);
     setCustom("");
+    setErrors((e) => ({ ...e, amount: undefined }));
+  };
+
+  const setError = (key: keyof Errors, msg: string | undefined) =>
+    setErrors((e) => ({ ...e, [key]: msg }));
+
+  const validateName = () => {
+    if (anonymous) return undefined;
+    if (!name.trim()) return "Please enter your name, or donate anonymously.";
+    if (name.trim().length > 80) return "Name must be under 80 characters.";
+    return undefined;
+  };
+  const validatePhone = () => {
+    if (!isMobileMoney) return undefined;
+    if (!/^6\d{8}$/.test(phone.replace(/\s+/g, ""))) return "Enter a 9-digit number starting with 6.";
+    return undefined;
+  };
+  const validateEmail = () => {
+    if (!isPayPal) return undefined;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return "Enter a valid email.";
+    return undefined;
+  };
+  const validateCard = (): Pick<Errors, "cardNumber" | "cardExpiry" | "cardCvc"> => {
+    if (!isCard) return {};
+    const out: Pick<Errors, "cardNumber" | "cardExpiry" | "cardCvc"> = {};
+    if (cardNumber.replace(/\s/g, "").length < 13) out.cardNumber = "Enter a valid card number.";
+    const m = cardExpiry.match(/^(\d{2})\/(\d{2})$/);
+    if (!m) out.cardExpiry = "Use MM/YY.";
+    else {
+      const mm = Number(m[1]);
+      if (mm < 1 || mm > 12) out.cardExpiry = "Invalid month.";
+    }
+    if (cardCvc.length < 3) out.cardCvc = "3–4 digits.";
+    return out;
+  };
+  const validateAmount = () => {
+    if (!effective || effective <= 0) return "Choose or enter an amount.";
+    return undefined;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!effective || effective <= 0) {
-      alert("Please choose or enter a donation amount.");
+    const next: Errors = {
+      amount: validateAmount(),
+      name: validateName(),
+      phone: validatePhone(),
+      email: validateEmail(),
+      ...validateCard(),
+    };
+    setErrors(next);
+    if (Object.values(next).some(Boolean)) {
+      toast.error("Please fix the highlighted fields.");
       return;
     }
-    if (!anonymous && !name.trim()) {
-      alert("Please enter your name, or choose to donate anonymously.");
-      return;
-    }
-    if (isMobileMoney) {
-      if (!/^6\d{8}$/.test(phone.replace(/\s+/g, ""))) {
-        alert("Please enter a valid 9-digit mobile number starting with 6.");
-        return;
-      }
-      alert(
-        `Thanks${anonymous ? "" : `, ${name}`}! You'll receive a ${method === "mtn" ? "MTN MoMo" : "Orange Money"} prompt on ${phone} for ${fmt(effective)} ${currency}.`,
-      );
-      return;
-    }
-    if (isPayPal) {
-      if (!email.trim() || !email.includes("@")) {
-        alert("Please enter a valid PayPal email.");
-        return;
-      }
-      alert(
-        `Thanks${anonymous ? "" : `, ${name}`}! You'll be redirected to PayPal to complete your donation of ${fmt(effective)} ${currency}.`,
-      );
-      return;
-    }
-    if (isCard) {
-      if (cardNumber.replace(/\s/g, "").length < 13) {
-        alert("Please enter a valid card number.");
-        return;
-      }
-      if (cardExpiry.length < 5) {
-        alert("Please enter a valid expiry date (MM/YY).");
-        return;
-      }
-      if (cardCvc.length < 3) {
-        alert("Please enter a valid CVC.");
-        return;
-      }
-      alert(
-        `Thanks${anonymous ? "" : `, ${name}`}! Your card donation of ${fmt(effective)} ${currency} has been processed.`,
-      );
-    }
+
+    setSubmitting(true);
+    // Simulate processing
+    setTimeout(() => {
+      setSubmitting(false);
+      const methodLabel =
+        method === "mtn" ? "MTN MoMo" :
+        method === "orange" ? "Orange Money" :
+        method === "stripe" ? "Card" : "PayPal";
+      navigate({
+        to: "/thanks",
+        search: {
+          amount: fmt(effective),
+          currency,
+          name: anonymous ? undefined : name.trim() || undefined,
+          method: methodLabel,
+        },
+      });
+    }, 700);
   };
 
   const formatCard = (v: string) => {
@@ -126,8 +173,11 @@ function Donate() {
     return digits;
   };
 
+  const errClass = (has: boolean) =>
+    has ? "border-red-500 focus-within:border-red-500 focus-within:ring-red-500 focus:border-red-500 focus:ring-red-500" : "";
+
   return (
-    <div className="min-h-screen bg-[#f3f3f1] text-neutral-900">
+    <div className="min-h-screen bg-[#f3f3f1] pb-28 text-neutral-900 sm:pb-0">
       <header className="border-b border-neutral-200 bg-white">
         <div className="mx-auto flex h-16 max-w-6xl items-center px-4 sm:px-6">
           <Link to="/" className="inline-flex items-center gap-1 text-sm font-medium text-neutral-700 hover:text-neutral-900">
@@ -181,9 +231,7 @@ function Donate() {
                 Just <span className="text-[#02a95c]">{fmt(remainingDisplay)} {currency}</span> to go!
               </h1>
               <p className="mt-1 text-lg font-bold text-neutral-900">Make an impact.</p>
-              <p className="mt-1 text-sm text-neutral-600">
-                Hands &amp; Hearts for Philip (HHP)
-              </p>
+              <p className="mt-1 text-sm text-neutral-600">Hands &amp; Hearts for Philip (HHP)</p>
             </div>
           </div>
 
@@ -206,9 +254,7 @@ function Donate() {
             </div>
 
             <div>
-              <h2 className="mb-3 text-base font-bold text-neutral-900">
-                Enter your donation
-              </h2>
+              <h2 className="mb-3 text-base font-bold text-neutral-900">Enter your donation</h2>
               <div className="grid grid-cols-3 gap-3">
                 {presets.map((v: number) => {
                   const selected = !custom && amount === v;
@@ -235,7 +281,7 @@ function Donate() {
                 })}
               </div>
 
-              <div className="mt-6 rounded-xl border-2 border-neutral-300 px-5 py-4 focus-within:border-neutral-900">
+              <div className={`mt-6 rounded-xl border-2 border-neutral-300 px-5 py-4 focus-within:border-neutral-900 ${errClass(!!errors.amount)}`}>
                 <div className="flex items-baseline gap-2">
                   <span className="text-3xl font-extrabold text-neutral-900">{currency}</span>
                   <input
@@ -245,11 +291,14 @@ function Donate() {
                     onChange={(e) => {
                       const v = e.target.value.replace(/[^0-9]/g, "");
                       setCustom(v);
+                      setErrors((er) => ({ ...er, amount: undefined }));
                     }}
+                    onBlur={() => setError("amount", validateAmount())}
                     className="w-full bg-transparent text-right text-4xl font-extrabold tracking-tight text-neutral-900 outline-none placeholder:text-neutral-300"
                   />
                 </div>
               </div>
+              {errors.amount && <p className="mt-2 text-xs font-semibold text-red-600">{errors.amount}</p>}
             </div>
 
             <div>
@@ -296,21 +345,25 @@ function Donate() {
                 <label className="mb-2 block text-base font-bold text-neutral-900">
                   {method === "mtn" ? "MTN MoMo" : "Orange Money"} number
                 </label>
-                <div className="flex items-stretch overflow-hidden rounded-xl border border-neutral-200 focus-within:border-neutral-900 focus-within:ring-2 focus-within:ring-neutral-900">
-                  <span className="grid place-items-center bg-neutral-50 px-4 text-sm font-bold text-neutral-700">
-                    +237
-                  </span>
+                <div className={`flex items-stretch overflow-hidden rounded-xl border border-neutral-200 focus-within:border-neutral-900 focus-within:ring-2 focus-within:ring-neutral-900 ${errClass(!!errors.phone)}`}>
+                  <span className="grid place-items-center bg-neutral-50 px-4 text-sm font-bold text-neutral-700">+237</span>
                   <input
                     type="tel"
                     placeholder="6XX XXX XXX"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      if (errors.phone) setError("phone", undefined);
+                    }}
+                    onBlur={() => setError("phone", validatePhone())}
                     className="flex-1 bg-white px-4 py-3 font-mono text-base tracking-wider outline-none placeholder:text-neutral-300"
                   />
                 </div>
-                <p className="mt-2 text-xs text-neutral-500">
-                  You&apos;ll receive a payment prompt on this number.
-                </p>
+                {errors.phone ? (
+                  <p className="mt-2 text-xs font-semibold text-red-600">{errors.phone}</p>
+                ) : (
+                  <p className="mt-2 text-xs text-neutral-500">You&apos;ll receive a payment prompt on this number.</p>
+                )}
               </div>
             )}
 
@@ -321,12 +374,15 @@ function Donate() {
                   type="email"
                   placeholder="you@example.com"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-base outline-none transition focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900 placeholder:text-neutral-300"
+                  onChange={(e) => { setEmail(e.target.value); if (errors.email) setError("email", undefined); }}
+                  onBlur={() => setError("email", validateEmail())}
+                  className={`w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-base outline-none transition focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900 placeholder:text-neutral-300 ${errClass(!!errors.email)}`}
                 />
-                <p className="mt-2 text-xs text-neutral-500">
-                  You&apos;ll be redirected to PayPal to complete the payment securely.
-                </p>
+                {errors.email ? (
+                  <p className="mt-2 text-xs font-semibold text-red-600">{errors.email}</p>
+                ) : (
+                  <p className="mt-2 text-xs text-neutral-500">You&apos;ll be redirected to PayPal to complete the payment securely.</p>
+                )}
               </div>
             )}
 
@@ -334,7 +390,7 @@ function Donate() {
               <div className="space-y-4">
                 <div>
                   <label className="mb-2 block text-base font-bold text-neutral-900">Card number</label>
-                  <div className="flex items-stretch overflow-hidden rounded-xl border border-neutral-200 focus-within:border-neutral-900 focus-within:ring-2 focus-within:ring-neutral-900">
+                  <div className={`flex items-stretch overflow-hidden rounded-xl border border-neutral-200 focus-within:border-neutral-900 focus-within:ring-2 focus-within:ring-neutral-900 ${errClass(!!errors.cardNumber)}`}>
                     <span className="grid place-items-center bg-neutral-50 px-4">
                       <CreditCard className="size-4 text-neutral-400" />
                     </span>
@@ -342,10 +398,12 @@ function Donate() {
                       inputMode="numeric"
                       placeholder="0000 0000 0000 0000"
                       value={cardNumber}
-                      onChange={(e) => setCardNumber(formatCard(e.target.value))}
+                      onChange={(e) => { setCardNumber(formatCard(e.target.value)); if (errors.cardNumber) setError("cardNumber", undefined); }}
+                      onBlur={() => setError("cardNumber", validateCard().cardNumber)}
                       className="flex-1 bg-white px-4 py-3 font-mono text-base tracking-wider outline-none placeholder:text-neutral-300"
                     />
                   </div>
+                  {errors.cardNumber && <p className="mt-2 text-xs font-semibold text-red-600">{errors.cardNumber}</p>}
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
@@ -354,9 +412,11 @@ function Donate() {
                       inputMode="numeric"
                       placeholder="MM/YY"
                       value={cardExpiry}
-                      onChange={(e) => setCardExpiry(formatExpiry(e.target.value))}
-                      className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 font-mono text-base tracking-wider outline-none transition focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900 placeholder:text-neutral-300"
+                      onChange={(e) => { setCardExpiry(formatExpiry(e.target.value)); if (errors.cardExpiry) setError("cardExpiry", undefined); }}
+                      onBlur={() => setError("cardExpiry", validateCard().cardExpiry)}
+                      className={`w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 font-mono text-base tracking-wider outline-none transition focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900 placeholder:text-neutral-300 ${errClass(!!errors.cardExpiry)}`}
                     />
+                    {errors.cardExpiry && <p className="mt-2 text-xs font-semibold text-red-600">{errors.cardExpiry}</p>}
                   </div>
                   <div>
                     <label className="mb-2 block text-base font-bold text-neutral-900">CVC</label>
@@ -366,14 +426,14 @@ function Donate() {
                       placeholder="123"
                       maxLength={4}
                       value={cardCvc}
-                      onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, "").slice(0, 4))}
-                      className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 font-mono text-base tracking-wider outline-none transition focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900 placeholder:text-neutral-300"
+                      onChange={(e) => { setCardCvc(e.target.value.replace(/\D/g, "").slice(0, 4)); if (errors.cardCvc) setError("cardCvc", undefined); }}
+                      onBlur={() => setError("cardCvc", validateCard().cardCvc)}
+                      className={`w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 font-mono text-base tracking-wider outline-none transition focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900 placeholder:text-neutral-300 ${errClass(!!errors.cardCvc)}`}
                     />
+                    {errors.cardCvc && <p className="mt-2 text-xs font-semibold text-red-600">{errors.cardCvc}</p>}
                   </div>
                 </div>
-                <p className="text-xs text-neutral-500">
-                  Your card details are encrypted and never stored on our servers.
-                </p>
+                <p className="text-xs text-neutral-500">Your card details are encrypted and never stored on our servers.</p>
               </div>
             )}
 
@@ -383,15 +443,18 @@ function Donate() {
                 type="text"
                 placeholder="Your name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => { setName(e.target.value); if (errors.name) setError("name", undefined); }}
+                onBlur={() => setError("name", validateName())}
                 disabled={anonymous}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 outline-none transition focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900 disabled:bg-neutral-50 disabled:text-neutral-400"
+                maxLength={80}
+                className={`w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 outline-none transition focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900 disabled:bg-neutral-50 disabled:text-neutral-400 ${errClass(!!errors.name)}`}
               />
+              {errors.name && <p className="mt-2 text-xs font-semibold text-red-600">{errors.name}</p>}
               <label className="mt-3 flex items-center gap-2 text-sm text-neutral-700">
                 <input
                   type="checkbox"
                   checked={anonymous}
-                  onChange={(e) => setAnonymous(e.target.checked)}
+                  onChange={(e) => { setAnonymous(e.target.checked); setError("name", undefined); }}
                   className="size-4 rounded border-neutral-300 text-[#02a95c] focus:ring-[#02a95c]"
                 />
                 Donate anonymously
@@ -405,16 +468,12 @@ function Donate() {
                 maxLength={240}
                 className="mt-4 w-full resize-none rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900"
               />
-              <p className="mt-1 text-right text-[11px] text-neutral-400">
-                {comment.length}/240
-              </p>
+              <p className="mt-1 text-right text-[11px] text-neutral-400">{comment.length}/240</p>
             </div>
 
             <div className="rounded-xl bg-neutral-50 px-5 py-4">
               <div className="flex items-baseline justify-between">
-                <span className="text-sm font-semibold text-neutral-600">
-                  Your donation
-                </span>
+                <span className="text-sm font-semibold text-neutral-600">Your donation</span>
                 <span className="text-2xl font-extrabold tracking-tight text-neutral-900">
                   {fmt(effective)} <span className="text-sm font-bold text-neutral-500">{currency}</span>
                 </span>
@@ -431,10 +490,11 @@ function Donate() {
 
             <button
               type="submit"
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-4 text-base font-extrabold text-white shadow-sm transition hover:bg-[#028f4e] active:scale-[0.99]"
+              disabled={submitting}
+              className="hidden w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-4 text-base font-extrabold text-white shadow-sm transition hover:bg-[#028f4e] active:scale-[0.99] disabled:opacity-60 sm:flex"
             >
               <Heart className="size-4 fill-white" />
-              {isPayPal ? "Continue to PayPal" : isCard ? "Pay with card" : "Donate now"}
+              {submitting ? "Processing…" : isPayPal ? "Continue to PayPal" : isCard ? "Pay with card" : "Donate now"}
             </button>
 
             <div className="flex items-center justify-center gap-1.5 text-[11px] text-neutral-500">
@@ -457,6 +517,29 @@ function Donate() {
           © {new Date().getFullYear()} givehope · Hosted for the HHP community committee
         </p>
       </main>
+
+      {/* Sticky mobile summary + CTA */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-200 bg-white/95 px-4 py-3 backdrop-blur sm:hidden">
+        <div className="flex items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs text-neutral-500">Your donation</p>
+            <p className="truncate text-base font-extrabold text-neutral-900">{fmt(effective)} {currency}</p>
+          </div>
+          <button
+            type="submit"
+            form=""
+            disabled={submitting}
+            onClick={() => {
+              const form = document.querySelector("form");
+              form?.requestSubmit();
+            }}
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#02a95c] px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:bg-[#028f4e] disabled:opacity-60"
+          >
+            <Heart className="size-4 fill-white" />
+            {submitting ? "Processing…" : "Donate"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
