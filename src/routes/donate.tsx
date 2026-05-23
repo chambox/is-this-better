@@ -526,8 +526,7 @@ function Donate() {
             <p className="truncate text-base font-extrabold text-neutral-900">{fmt(effective)} {currency}</p>
           </div>
           <button
-            type="submit"
-            form=""
+            type="button"
             disabled={submitting}
             onClick={() => {
               const form = document.querySelector("form");
