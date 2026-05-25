@@ -39,19 +39,31 @@ function Browse() {
 
 
 
-  const photos = [
-    "https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=600&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=600&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&q=80&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80&auto=format&fit=crop",
-  ];
-  const fanTransforms = [
-    "rotate(-18deg) translateY(70px)",
-    "rotate(-9deg) translateY(20px)",
-    "rotate(0deg) translateY(0px)",
-    "rotate(9deg) translateY(20px)",
-    "rotate(18deg) translateY(70px)",
+  const heroTiles = [
+    {
+      src: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80&auto=format&fit=crop",
+      label: "Medical",
+      raised: "1.2M FCFA",
+      className: "col-span-2 row-span-2 h-full",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=600&q=80&auto=format&fit=crop",
+      label: "Education",
+      raised: "450k FCFA",
+      className: "col-span-2 row-span-1 h-44 sm:h-52",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=600&q=80&auto=format&fit=crop",
+      label: "Emergency",
+      raised: "3.4M FCFA",
+      className: "col-span-1 row-span-1 h-44 sm:h-52",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80&auto=format&fit=crop",
+      label: "Sports",
+      raised: "780k FCFA",
+      className: "col-span-1 row-span-1 h-44 sm:h-52",
+    },
   ];
 
   return (
