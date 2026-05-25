@@ -9,8 +9,8 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { StatCounter } from "@/components/stat-counter";
 
-const ORANGE = "#FF8C42";
-const BLUE = "#6EC6FF";
+const PRIMARY = "#0d7a5f";
+const GOLD = "#c9a84c";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,18 +48,18 @@ function Home() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#FFF7F0] via-white to-[#EFF8FF]">
-        <div className="pointer-events-none absolute -left-32 top-10 size-80 rounded-full bg-[#FFE2CB] opacity-60 blur-3xl" />
-        <div className="pointer-events-none absolute -right-32 bottom-0 size-96 rounded-full bg-[#D7EEFF] opacity-70 blur-3xl" />
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#f5f0e1] via-white to-[#f5f0e1]">
+        <div className="pointer-events-none absolute -left-32 top-10 size-80 rounded-full bg-[#e8f5f0] opacity-60 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 bottom-0 size-96 rounded-full bg-[#f0ebd8] opacity-70 blur-3xl" />
 
         <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-8 sm:py-24 lg:grid-cols-2 lg:items-center">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-[#FF8C42] shadow-sm ring-1 ring-[#FFE2CB]">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-[#0d7a5f] shadow-sm ring-1 ring-[#e8f5f0]">
               <Sparkles className="size-3.5" /> Trusted by 2M+ donors worldwide
             </span>
             <h1 className="mt-5 text-5xl font-black leading-[1.05] tracking-tight text-neutral-900 sm:text-6xl">
               Help People.{" "}
-              <span className="bg-gradient-to-r from-[#FF8C42] to-[#6EC6FF] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#0d7a5f] to-[#c9a84c] bg-clip-text text-transparent">
                 Change Lives.
               </span>
             </h1>
@@ -69,26 +69,26 @@ function Home() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 to="/start"
-                className="inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#FFD0AC] transition hover:opacity-90"
-                style={{ background: ORANGE }}
+                className="inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#d4e8df] transition hover:opacity-90"
+                style={{ background: PRIMARY }}
               >
                 Start a Fundraiser
               </Link>
               <Link
                 to="/"
                 hash="featured"
-                className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-6 py-3.5 text-sm font-bold text-neutral-800 shadow-sm transition hover:border-[#6EC6FF] hover:text-[#3FA7E0]"
+                className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-6 py-3.5 text-sm font-bold text-neutral-800 shadow-sm transition hover:border-[#c9a84c] hover:text-[#c9a84c]"
               >
                 Donate Now <ArrowRight className="size-4" />
               </Link>
             </div>
             <div className="mt-8 flex items-center gap-5 text-xs text-neutral-600">
               <div className="flex items-center gap-1.5">
-                <ShieldCheck className="size-4 text-[#3FA7E0]" />
+                <ShieldCheck className="size-4 text-[#c9a84c]" />
                 Verified campaigns
               </div>
               <div className="flex items-center gap-1.5">
-                <Lock className="size-4 text-[#3FA7E0]" />
+                <Lock className="size-4 text-[#c9a84c]" />
                 Secure donations
               </div>
             </div>
@@ -137,7 +137,7 @@ function Home() {
             <div className="absolute -bottom-4 -left-4 hidden w-56 rounded-2xl bg-white p-4 shadow-2xl ring-1 ring-black/5 sm:block">
               <div className="flex items-center gap-2">
                 <span className="grid size-8 place-items-center rounded-full" style={{ background: "#FFEFE0" }}>
-                  <Heart className="size-4" style={{ color: ORANGE }} />
+                  <Heart className="size-4" style={{ color: PRIMARY }} />
                 </span>
                 <div>
                   <div className="text-[11px] font-semibold text-neutral-500">Just now</div>
@@ -154,7 +154,7 @@ function Home() {
       <section id="featured" className="mx-auto max-w-7xl scroll-mt-20 px-4 py-20 sm:px-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>
               Featured Fundraisers
             </span>
             <h2 className="mt-2 text-3xl font-black sm:text-4xl">Causes that need you right now</h2>
@@ -169,7 +169,7 @@ function Home() {
               placeholder="Search fundraisers…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full rounded-full border border-neutral-200 bg-white py-2.5 pl-9 pr-4 text-sm outline-none transition focus:border-[#FF8C42] focus:ring-2 focus:ring-[#FFE2CB]"
+              className="w-full rounded-full border border-neutral-200 bg-white py-2.5 pl-9 pr-4 text-sm outline-none transition focus:border-[#0d7a5f] focus:ring-2 focus:ring-[#e8f5f0]"
             />
           </div>
         </div>
@@ -183,8 +183,8 @@ function Home() {
                 onClick={() => setActiveCat(cat)}
                 className={`rounded-full border px-4 py-1.5 text-sm font-semibold transition ${
                   active
-                    ? "border-[#FF8C42] bg-[#FF8C42] text-white shadow"
-                    : "border-neutral-200 bg-white text-neutral-700 hover:border-[#FF8C42] hover:text-[#FF8C42]"
+                    ? "border-[#0d7a5f] bg-[#0d7a5f] text-white shadow"
+                    : "border-neutral-200 bg-white text-neutral-700 hover:border-[#0d7a5f] hover:text-[#0d7a5f]"
                 }`}
               >
                 {cat}
@@ -213,16 +213,16 @@ function Home() {
                     {c.image ? (
                       <img src={c.image} alt={c.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                     ) : (
-                      <div className="grid h-full w-full place-items-center bg-gradient-to-br from-[#FF8C42] to-[#6EC6FF] text-white">
+                      <div className="grid h-full w-full place-items-center bg-gradient-to-br from-[#0d7a5f] to-[#c9a84c] text-white">
                         <span className="text-6xl font-black opacity-30">{c.title.charAt(0)}</span>
                       </div>
                     )}
-                    <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wide text-[#FF8C42] shadow-sm">
+                    <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wide text-[#0d7a5f] shadow-sm">
                       {c.category}
                     </span>
                   </div>
                   <div className="flex flex-1 flex-col gap-3 p-5">
-                    <h3 className="line-clamp-2 text-base font-extrabold leading-snug group-hover:text-[#FF8C42]">
+                    <h3 className="line-clamp-2 text-base font-extrabold leading-snug group-hover:text-[#0d7a5f]">
                       {c.title}
                     </h3>
                     <p className="line-clamp-2 text-sm text-neutral-600">{c.story}</p>
@@ -234,7 +234,7 @@ function Home() {
                       <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-100">
                         <div
                           className="h-full rounded-full"
-                          style={{ width: `${percent}%`, background: `linear-gradient(90deg, ${ORANGE}, ${BLUE})` }}
+                          style={{ width: `${percent}%`, background: `linear-gradient(90deg, ${PRIMARY}, ${GOLD})` }}
                         />
                       </div>
                       <div className="mt-2 flex items-baseline justify-between">
@@ -243,7 +243,7 @@ function Home() {
                       </div>
                       <button
                         className="mt-4 w-full rounded-full py-2.5 text-sm font-bold text-white transition group-hover:opacity-90"
-                        style={{ background: ORANGE }}
+                        style={{ background: PRIMARY }}
                       >
                         Donate
                       </button>
@@ -260,7 +260,7 @@ function Home() {
       <section className="bg-[#FAFBFD]">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-8">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>How It Works</span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>How It Works</span>
             <h2 className="mt-2 text-3xl font-black sm:text-4xl">Three simple steps</h2>
             <p className="mx-auto mt-3 max-w-xl text-neutral-600">Launch a successful fundraiser in under 5 minutes — no setup fees.</p>
           </div>
@@ -272,8 +272,8 @@ function Home() {
             ].map((s) => (
               <div key={s.n} className="group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
                 <span className="absolute right-5 top-5 text-5xl font-black text-neutral-100">{s.n}</span>
-                <span className="grid size-12 place-items-center rounded-2xl" style={{ background: "#FFF1E5" }}>
-                  <s.icon className="size-6" style={{ color: ORANGE }} />
+                <span className="grid size-12 place-items-center rounded-2xl" style={{ background: "#e8f5f0" }}>
+                  <s.icon className="size-6" style={{ color: PRIMARY }} />
                 </span>
                 <h3 className="mt-5 text-lg font-extrabold">{s.title}</h3>
                 <p className="mt-2 text-sm text-neutral-600">{s.body}</p>
@@ -286,17 +286,17 @@ function Home() {
       {/* Categories */}
       <section id="categories" className="mx-auto max-w-7xl scroll-mt-20 px-4 py-20 sm:px-8">
         <div className="text-center">
-          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>Categories</span>
+          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>Categories</span>
           <h2 className="mt-2 text-3xl font-black sm:text-4xl">Find a cause close to your heart</h2>
         </div>
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
           {[
-            { icon: Stethoscope, label: "Medical", tint: "#FFE2CB", color: ORANGE },
-            { icon: GraduationCap, label: "Education", tint: "#DCEEFF", color: "#3FA7E0" },
-            { icon: Siren, label: "Emergency", tint: "#FFE2CB", color: ORANGE },
-            { icon: Building2, label: "Nonprofit", tint: "#DCEEFF", color: "#3FA7E0" },
-            { icon: Flower2, label: "Memorial", tint: "#FFE2CB", color: ORANGE },
-            { icon: HandHeart, label: "Community", tint: "#DCEEFF", color: "#3FA7E0" },
+            { icon: Stethoscope, label: "Medical", tint: "#e8f5f0", color: PRIMARY },
+            { icon: GraduationCap, label: "Education", tint: "#f0ebd8", color: "#c9a84c" },
+            { icon: Siren, label: "Emergency", tint: "#e8f5f0", color: PRIMARY },
+            { icon: Building2, label: "Nonprofit", tint: "#f0ebd8", color: "#c9a84c" },
+            { icon: Flower2, label: "Memorial", tint: "#e8f5f0", color: PRIMARY },
+            { icon: HandHeart, label: "Community", tint: "#f0ebd8", color: "#c9a84c" },
           ].map((cat) => (
             <button
               key={cat.label}
@@ -304,7 +304,7 @@ function Home() {
                 setActiveCat(cat.label === "Nonprofit" || cat.label === "Memorial" ? cat.label : cat.label);
                 document.getElementById("featured")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="group flex flex-col items-center gap-3 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-[#FF8C42] hover:shadow-md"
+              className="group flex flex-col items-center gap-3 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-[#0d7a5f] hover:shadow-md"
             >
               <span className="grid size-14 place-items-center rounded-2xl transition group-hover:scale-110" style={{ background: cat.tint }}>
                 <cat.icon className="size-7" style={{ color: cat.color }} />
@@ -316,10 +316,10 @@ function Home() {
       </section>
 
       {/* Success Stories */}
-      <section id="stories" className="scroll-mt-20 bg-gradient-to-br from-[#EFF8FF] via-white to-[#FFF7F0]">
+      <section id="stories" className="scroll-mt-20 bg-gradient-to-br from-[#f5f0e1] via-white to-[#f5f0e1]">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-8">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>Success Stories</span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>Success Stories</span>
             <h2 className="mt-2 text-3xl font-black sm:text-4xl">Real impact, real people</h2>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -341,7 +341,7 @@ function Home() {
               },
             ].map((t) => (
               <div key={t.name} className="rounded-3xl bg-white p-7 shadow-sm ring-1 ring-neutral-100 transition hover:-translate-y-1 hover:shadow-xl">
-                <Quote className="size-7" style={{ color: ORANGE }} />
+                <Quote className="size-7" style={{ color: PRIMARY }} />
                 <p className="mt-3 text-sm leading-relaxed text-neutral-700">"{t.quote}"</p>
                 <div className="mt-5 flex items-center gap-3 border-t border-neutral-100 pt-4">
                   <img src={t.avatar} alt={t.name} className="size-11 rounded-full object-cover" />
@@ -351,7 +351,7 @@ function Home() {
                   </div>
                   <div className="ml-auto flex gap-0.5">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="size-3.5 fill-[#FF8C42] text-[#FF8C42]" />
+                      <Star key={i} className="size-3.5 fill-[#0d7a5f] text-[#0d7a5f]" />
                     ))}
                   </div>
                 </div>
@@ -365,7 +365,7 @@ function Home() {
       <section id="trust" className="mx-auto max-w-7xl scroll-mt-20 px-4 py-20 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>Trust & Safety</span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>Trust & Safety</span>
             <h2 className="mt-2 text-3xl font-black sm:text-4xl">Your donation is in safe hands</h2>
             <p className="mt-3 max-w-md text-neutral-600">
               From the moment you give to the moment funds reach the cause, every step is monitored, verified, and backed by our guarantee.
@@ -378,8 +378,8 @@ function Home() {
                 { icon: Heart, title: "Fraud protection", body: "Our trust team monitors campaigns 24/7." },
               ].map((f) => (
                 <div key={f.title} className="flex gap-3">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-xl" style={{ background: "#DCEEFF" }}>
-                    <f.icon className="size-5" style={{ color: "#3FA7E0" }} />
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl" style={{ background: "#f0ebd8" }}>
+                    <f.icon className="size-5" style={{ color: "#c9a84c" }} />
                   </span>
                   <div>
                     <div className="text-sm font-extrabold">{f.title}</div>
@@ -399,7 +399,7 @@ function Home() {
             </div>
             <div className="absolute -right-4 -top-4 hidden rounded-2xl bg-white p-4 shadow-2xl ring-1 ring-black/5 sm:block">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="size-5" style={{ color: ORANGE }} />
+                <ShieldCheck className="size-5" style={{ color: PRIMARY }} />
                 <div>
                   <div className="text-[11px] font-semibold text-neutral-500">Guarantee</div>
                   <div className="text-sm font-extrabold">100% refund promise</div>
@@ -411,7 +411,7 @@ function Home() {
       </section>
 
       {/* Stats */}
-      <section className="bg-gradient-to-r from-[#FF8C42] to-[#FFA968] py-16 text-white">
+      <section className="bg-gradient-to-r from-[#0d7a5f] to-[#c9a84c] py-16 text-white">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 text-center sm:grid-cols-3 sm:px-8">
           {[
             { value: 12_500_000, prefix: "$", suffix: "+", label: "Funds raised" },
@@ -431,8 +431,8 @@ function Home() {
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-8">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1a2942] via-[#0F1A2E] to-[#0F1A2E] p-10 text-white sm:p-16">
-          <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-[#FF8C42] opacity-30 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-20 -left-20 size-80 rounded-full bg-[#6EC6FF] opacity-30 blur-3xl" />
+          <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-[#0d7a5f] opacity-30 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -left-20 size-80 rounded-full bg-[#c9a84c] opacity-30 blur-3xl" />
           <div className="relative max-w-2xl">
             <h2 className="text-3xl font-black sm:text-5xl">Start making a difference today.</h2>
             <p className="mt-4 text-base text-white/80 sm:text-lg">
@@ -442,7 +442,7 @@ function Home() {
               <Link
                 to="/start"
                 className="inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-bold text-white shadow-lg transition hover:opacity-90"
-                style={{ background: ORANGE }}
+                style={{ background: PRIMARY }}
               >
                 Start a Fundraiser
               </Link>

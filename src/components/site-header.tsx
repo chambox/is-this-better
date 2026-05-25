@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Heart, Menu, X, ChevronDown, User as UserIcon } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
-const BRAND_ORANGE = "#FF8C42";
+const BRAND_PRIMARY = "#0d7a5f";
 
 export function SiteHeader() {
   const user = useAuth();
@@ -24,27 +24,27 @@ export function SiteHeader() {
         <Link to="/" className="flex items-center gap-2">
           <span
             className="grid size-8 place-items-center rounded-xl shadow-sm"
-            style={{ background: `linear-gradient(135deg, ${BRAND_ORANGE}, #6EC6FF)` }}
+            style={{ background: `linear-gradient(135deg, ${BRAND_PRIMARY}, #c9a84c)` }}
           >
             <Heart className="size-4 fill-white text-white" />
           </span>
           <span className="text-xl font-extrabold tracking-tight text-neutral-900">
-            give<span style={{ color: BRAND_ORANGE }}>hope</span>
+            give<span style={{ color: BRAND_PRIMARY }}>hope</span>
           </span>
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-7 text-sm font-semibold text-neutral-700 md:flex">
-          <Link to="/" hash="featured" className="hover:text-[#FF8C42]">
+          <Link to="/" hash="featured" className="hover:text-[#0d7a5f]">
             Donate
           </Link>
-          <Link to="/start" className="hover:text-[#FF8C42]">
+          <Link to="/start" className="hover:text-[#0d7a5f]">
             Fundraise
           </Link>
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => setAboutOpen((v) => !v)}
-              className="inline-flex items-center gap-1 hover:text-[#FF8C42]"
+              className="inline-flex items-center gap-1 hover:text-[#0d7a5f]"
             >
               About <ChevronDown className="size-3.5" />
             </button>
@@ -52,26 +52,26 @@ export function SiteHeader() {
               <div className="absolute left-1/2 top-full z-50 mt-2 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-xl animate-fade-in">
                 <Link
                   to="/about/how-it-works"
-                  className="block px-4 py-3 text-sm font-medium text-neutral-700 hover:bg-[#FFF4EC] hover:text-[#FF8C42]"
+                  className="block px-4 py-3 text-sm font-medium text-neutral-700 hover:bg-[#e8f5f0] hover:text-[#0d7a5f]"
                 >
                   How It Works
                 </Link>
                 <Link
                   to="/about/refund-guarantees"
-                  className="block px-4 py-3 text-sm font-medium text-neutral-700 hover:bg-[#FFF4EC] hover:text-[#FF8C42]"
+                  className="block px-4 py-3 text-sm font-medium text-neutral-700 hover:bg-[#e8f5f0] hover:text-[#0d7a5f]"
                 >
                   Refund Guarantees
                 </Link>
                 <Link
                   to="/about/faq"
-                  className="block px-4 py-3 text-sm font-medium text-neutral-700 hover:bg-[#FFF4EC] hover:text-[#FF8C42]"
+                  className="block px-4 py-3 text-sm font-medium text-neutral-700 hover:bg-[#e8f5f0] hover:text-[#0d7a5f]"
                 >
                   FAQ
                 </Link>
               </div>
             )}
           </div>
-          <Link to="/contact" className="hover:text-[#FF8C42]">
+          <Link to="/contact" className="hover:text-[#0d7a5f]">
             Contact
           </Link>
         </nav>
@@ -83,20 +83,20 @@ export function SiteHeader() {
               to="/dashboard"
               className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm font-bold text-neutral-800 hover:bg-neutral-50"
             >
-              <span className="grid size-6 place-items-center rounded-full bg-[#E8F4FF]">
-                <UserIcon className="size-3.5 text-[#3FA7E0]" />
+              <span className="grid size-6 place-items-center rounded-full bg-[#f0ebd8]">
+                <UserIcon className="size-3.5 text-[#c9a84c]" />
               </span>
               {user.name.split(" ")[0]}
             </Link>
           ) : (
-            <Link to="/login" className="text-sm font-semibold text-neutral-700 hover:text-[#FF8C42]">
+            <Link to="/login" className="text-sm font-semibold text-neutral-700 hover:text-[#0d7a5f]">
               Sign In
             </Link>
           )}
           <Link
             to="/start"
             className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
-            style={{ background: BRAND_ORANGE }}
+            style={{ background: BRAND_PRIMARY }}
           >
             Start a Fundraiser
           </Link>
@@ -150,7 +150,7 @@ export function SiteHeader() {
               to="/start"
               onClick={() => setMobileOpen(false)}
               className="mt-2 inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-sm"
-              style={{ background: BRAND_ORANGE }}
+              style={{ background: BRAND_PRIMARY }}
             >
               Start a Fundraiser
             </Link>
