@@ -58,7 +58,7 @@ function Contact() {
           <div className="space-y-4 lg:col-span-1">
             {[
               { icon: Mail, label: "Email us", value: "support@givehope.com", sub: "We reply within a few hours", tint: "#e8f5f0", color: PRIMARY },
-              { icon: Phone, label: "Call us", value: "+237 6 90 12 34 56", sub: "Mon–Fri, 8am–6pm WAT", tint: "#f0ebd8", color: BLUE },
+              { icon: Phone, label: "Call us", value: "+237 6 90 12 34 56", sub: "Mon–Fri, 8am–6pm WAT", tint: "#f0ebd8", color: GOLD },
               { icon: MapPin, label: "Visit us", value: "Akwa, Douala, Cameroon", sub: "Bonanjo District, 5th floor", tint: "#e8f5f0", color: PRIMARY },
             ].map((c) => (
               <div key={c.label} className="flex gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-neutral-100">
