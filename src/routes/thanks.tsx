@@ -62,7 +62,7 @@ function Thanks() {
       <header className="border-b border-neutral-200 bg-white">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-center px-4 sm:px-6">
           <Link to="/" className="flex items-center gap-1.5">
-            <span className="grid size-7 place-items-center rounded-full bg-[#02a95c]">
+            <span className="grid size-7 place-items-center rounded-full bg-[#0d7a5f]">
               <Heart className="size-3.5 fill-white text-white" />
             </span>
             <span className="text-lg font-extrabold tracking-tight">givehope</span>
@@ -73,8 +73,8 @@ function Thanks() {
       <main className="mx-auto max-w-xl px-4 py-12 sm:px-6 sm:py-16">
         <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
           <div className="px-6 py-10 text-center sm:px-10">
-            <div className="mx-auto grid size-16 place-items-center rounded-full bg-[#02a95c]/10">
-              <Check className="size-8 text-[#02a95c]" strokeWidth={3} />
+            <div className="mx-auto grid size-16 place-items-center rounded-full bg-[#0d7a5f]/10">
+              <Check className="size-8 text-[#0d7a5f]" strokeWidth={3} />
             </div>
             <h1 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">
               Thank you{name ? `, ${name}` : ""}!
@@ -88,9 +88,9 @@ function Thanks() {
             <div className="mt-8 rounded-xl bg-neutral-50 px-5 py-4 text-left">
               <p className="text-sm font-bold text-neutral-900">What happens next</p>
               <ul className="mt-2 space-y-1.5 text-sm text-neutral-600">
-                <li className="flex gap-2"><span className="text-[#02a95c]">✓</span> A receipt has been emailed to you.</li>
-                <li className="flex gap-2"><span className="text-[#02a95c]">✓</span> Funds go directly to the verified organizer.</li>
-                <li className="flex gap-2"><span className="text-[#02a95c]">✓</span> You&apos;ll get notified when the organizer posts updates.</li>
+                <li className="flex gap-2"><span className="text-[#0d7a5f]">✓</span> A receipt has been emailed to you.</li>
+                <li className="flex gap-2"><span className="text-[#0d7a5f]">✓</span> Funds go directly to the verified organizer.</li>
+                <li className="flex gap-2"><span className="text-[#0d7a5f]">✓</span> You&apos;ll get notified when the organizer posts updates.</li>
               </ul>
             </div>
 
@@ -101,14 +101,14 @@ function Thanks() {
                 <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[#1877f2] px-4 py-2 text-sm font-bold text-white hover:opacity-90">Facebook</a>
                 <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-4 py-2 text-sm font-bold text-white hover:opacity-90">X</a>
                 <button onClick={handleCopy} className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-bold text-neutral-700 hover:bg-neutral-50">
-                  {copied ? <><Check className="size-3.5 text-[#02a95c]" /> Copied</> : <><Copy className="size-3.5" /> Copy link</>}
+                  {copied ? <><Check className="size-3.5 text-[#0d7a5f]" /> Copied</> : <><Copy className="size-3.5" /> Copy link</>}
                 </button>
               </div>
             </div>
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               {campaign && (
-                <Link to="/c/$slug" params={{ slug: campaign.slug }} className="inline-flex items-center gap-1.5 text-sm font-bold text-[#02a95c] hover:underline">
+                <Link to="/c/$slug" params={{ slug: campaign.slug }} className="inline-flex items-center gap-1.5 text-sm font-bold text-[#0d7a5f] hover:underline">
                   Back to fundraiser <ArrowRight className="size-3.5" />
                 </Link>
               )}

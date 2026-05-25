@@ -81,7 +81,7 @@ function StartPage() {
             <ChevronLeft className="size-4" /> Browse
           </Link>
           <Link to="/" className="absolute left-1/2 flex -translate-x-1/2 items-center gap-1.5">
-            <span className="grid size-7 place-items-center rounded-full bg-[#02a95c]">
+            <span className="grid size-7 place-items-center rounded-full bg-[#0d7a5f]">
               <Heart className="size-3.5 fill-white text-white" />
             </span>
             <span className="text-lg font-extrabold tracking-tight">givehope</span>
@@ -208,7 +208,7 @@ function StartPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-4 text-base font-extrabold text-white shadow-sm transition hover:bg-[#028f4e] active:scale-[0.99] disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#0d7a5f] py-4 text-base font-extrabold text-white shadow-sm transition hover:bg-[#0a634c] active:scale-[0.99] disabled:opacity-60"
           >
             <Heart className="size-4 fill-white" /> {submitting ? "Creating…" : "Publish fundraiser"}
           </button>
