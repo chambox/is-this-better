@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const BRAND_PRIMARY = "#0d7a5f";
 
@@ -11,12 +12,7 @@ export function SiteFooter() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-2">
-              <span
-                className="grid size-8 place-items-center rounded-xl shadow-sm"
-                style={{ background: `linear-gradient(135deg, ${BRAND_PRIMARY}, #c9a84c)` }}
-              >
-                <Heart className="size-4 fill-white text-white" />
-              </span>
+              <img src={logo} alt="givehope logo" className="size-10 object-contain" />
               <span className="text-xl font-extrabold tracking-tight">
                 give<span style={{ color: BRAND_PRIMARY }}>hope</span>
               </span>

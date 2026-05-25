@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Heart, Menu, X, ChevronDown, User as UserIcon } from "lucide-react";
+import { Menu, X, ChevronDown, User as UserIcon } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import logo from "@/assets/logo.png";
 
 const BRAND_PRIMARY = "#0d7a5f";
 
@@ -22,12 +23,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <span
-            className="grid size-8 place-items-center rounded-xl shadow-sm"
-            style={{ background: `linear-gradient(135deg, ${BRAND_PRIMARY}, #c9a84c)` }}
-          >
-            <Heart className="size-4 fill-white text-white" />
-          </span>
+          <img src={logo} alt="givehope logo" className="size-10 object-contain" />
           <span className="text-xl font-extrabold tracking-tight text-neutral-900">
             give<span style={{ color: BRAND_PRIMARY }}>hope</span>
           </span>
