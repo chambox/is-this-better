@@ -50,7 +50,7 @@ export function SiteFooter() {
           <FooterCol
             title="About"
             links={[
-              { label: "Our Story", to: "/about" },
+              { label: "Our Story", to: "/about/how-it-works" },
               { label: "Refund Guarantee", to: "/about/refund-guarantees" },
               { label: "FAQ", to: "/about/faq" },
               { label: "Trust & Safety", to: "/", hash: "trust" },
@@ -61,10 +61,11 @@ export function SiteFooter() {
             links={[
               { label: "Contact Us", to: "/contact" },
               { label: "Help Center", to: "/about/faq" },
-              { label: "Privacy Policy", to: "/about" },
-              { label: "Terms of Service", to: "/about" },
+              { label: "How It Works", to: "/about/how-it-works" },
+              { label: "Refund Policy", to: "/about/refund-guarantees" },
             ]}
           />
+
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-neutral-200 pt-6 text-xs text-neutral-500 sm:flex-row">
