@@ -134,19 +134,31 @@ function Browse() {
             </Link>
           </div>
 
-          {/* Fan of photos */}
-          <div className="relative mx-auto mt-20 h-[260px] max-w-5xl sm:h-[320px]">
-            <div className="absolute inset-x-0 bottom-0 flex items-end justify-center gap-3 sm:gap-5">
-              {photos.map((src, i) => (
-                <div
-                  key={i}
-                  className="h-44 w-32 overflow-hidden rounded-2xl bg-neutral-200 shadow-lg ring-1 ring-black/5 sm:h-60 sm:w-44"
-                  style={{ transform: fanTransforms[i], transformOrigin: "bottom center" }}
-                >
-                  <img src={src} alt="" className="h-full w-full object-cover" />
+          {/* Hero collage */}
+          <div className="mx-auto mt-16 grid max-w-5xl grid-cols-4 grid-rows-2 gap-3 sm:gap-4">
+            {heroTiles.map((t, i) => (
+              <div
+                key={i}
+                className={`group relative overflow-hidden rounded-3xl bg-neutral-200 shadow-sm ring-1 ring-black/5 ${t.className}`}
+              >
+                <img
+                  src={t.src}
+                  alt={t.label}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4 text-left">
+                  <div className="flex items-end justify-between gap-2">
+                    <span className="rounded-full bg-white/95 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-neutral-900">
+                      {t.label}
+                    </span>
+                    <span className="text-xs font-extrabold text-white drop-shadow">
+                      {t.raised} raised
+                    </span>
+                  </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
