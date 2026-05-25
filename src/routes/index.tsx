@@ -411,7 +411,7 @@ function Home() {
       </section>
 
       {/* Stats */}
-      <section className="bg-gradient-to-r from-[#0d7a5f] to-[#FFA968] py-16 text-white">
+      <section className="bg-gradient-to-r from-[#0d7a5f] to-[#c9a84c] py-16 text-white">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 text-center sm:grid-cols-3 sm:px-8">
           {[
             { value: 12_500_000, prefix: "$", suffix: "+", label: "Funds raised" },
