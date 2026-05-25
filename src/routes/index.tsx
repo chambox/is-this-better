@@ -8,15 +8,8 @@ import { CATEGORIES, fmtFCFA, useCampaigns } from "@/lib/campaigns";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { StatCounter } from "@/components/stat-counter";
-import hero1 from "@/assets/hero-1.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
-import hero4 from "@/assets/hero-4.jpg";
-import hero5 from "@/assets/hero-5.jpg";
-import trustImg from "@/assets/trust.jpg";
-import avatar1 from "@/assets/avatar-1.jpg";
-import avatar2 from "@/assets/avatar-2.jpg";
-import avatar3 from "@/assets/avatar-3.jpg";
+
+
 
 const PRIMARY = "#0d7a5f";
 const GOLD = "#c9a84c";
@@ -108,35 +101,35 @@ function Home() {
             <div className="grid grid-cols-6 grid-rows-6 gap-3 sm:gap-4">
               <div className="col-span-4 row-span-4 overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/5">
                 <img
-                  src={hero1}
+                  src="https://images.unsplash.com/photo-1509099863731-ef4bff19e808?w=900&q=80&auto=format&fit=crop"
                   alt="Community helping each other"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div className="col-span-2 row-span-3 overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/5">
                 <img
-                  src={hero2}
+                  src="https://images.unsplash.com/photo-1547922938-a6dcb893f375?w=600&q=80&auto=format&fit=crop"
                   alt="Volunteers"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div className="col-span-2 row-span-3 overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/5">
                 <img
-                  src={hero3}
+                  src="https://images.unsplash.com/photo-1509099342178-e323b1717dba?w=600&q=80&auto=format&fit=crop"
                   alt="Education support"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div className="col-span-3 row-span-2 overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/5">
                 <img
-                  src={hero4}
+                  src="https://images.unsplash.com/photo-1632215861513-130b66fe97f4?w=600&q=80&auto=format&fit=crop"
                   alt="Medical care"
                   className="h-full w-full object-cover"
                 />
               </div>
               <div className="col-span-3 row-span-2 overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/5">
                 <img
-                  src={hero5}
+                  src="https://images.unsplash.com/photo-1521510186458-bbbda7aef46b?w=600&q=80&auto=format&fit=crop"
                   alt="Donor support"
                   className="h-full w-full object-cover"
                 />
@@ -336,17 +329,17 @@ function Home() {
               {
                 quote: "We raised more than triple our goal in two weeks. The community wrapped its arms around us.",
                 name: "Marie Tchoumi", role: "Organizer · Medical fundraiser",
-                avatar: avatar1,
+                avatar: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&q=80&auto=format&fit=crop",
               },
               {
                 quote: "Setting it up took 4 minutes. By morning we had donations from 60 different people.",
                 name: "Jean-Paul Nkemdirim", role: "Organizer · Education fund",
-                avatar: avatar2,
+                avatar: "https://images.unsplash.com/photo-1556300219-2d2fdd6266d3?w=200&q=80&auto=format&fit=crop",
               },
               {
                 quote: "After the floods, this was the fastest way to get real aid to families. Simple and trustworthy.",
                 name: "Aïcha Diallo", role: "Coordinator · Emergency relief",
-                avatar: avatar3,
+                avatar: "https://images.unsplash.com/photo-1568782517100-09bf22d88c2d?w=200&q=80&auto=format&fit=crop",
               },
             ].map((t) => (
               <div key={t.name} className="rounded-3xl bg-white p-7 shadow-sm ring-1 ring-neutral-100 transition hover:-translate-y-1 hover:shadow-xl">
@@ -401,7 +394,7 @@ function Home() {
           <div className="relative">
             <div className="overflow-hidden rounded-3xl shadow-2xl ring-1 ring-black/5">
               <img
-                src={trustImg}
+                src="https://images.unsplash.com/photo-1655720359248-eeace8c709c5?w=900&q=80&auto=format&fit=crop"
                 alt="Handshake — trust"
                 className="h-full w-full object-cover"
               />
