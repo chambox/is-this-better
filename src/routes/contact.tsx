@@ -44,7 +44,7 @@ function Contact() {
 
       <section className="bg-gradient-to-br from-[#f5f0e1] via-white to-[#f5f0e1]">
         <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-8 sm:py-24">
-          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>Get In Touch</span>
+          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>Get In Touch</span>
           <h1 className="mt-3 text-4xl font-black sm:text-6xl">We're here to help</h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-neutral-600">
             Whether you have a question, need support with a fundraiser, or want to report something — we'd love to hear from you.
@@ -57,9 +57,9 @@ function Contact() {
           {/* Contact info */}
           <div className="space-y-4 lg:col-span-1">
             {[
-              { icon: Mail, label: "Email us", value: "support@givehope.com", sub: "We reply within a few hours", tint: "#e8f5f0", color: ORANGE },
+              { icon: Mail, label: "Email us", value: "support@givehope.com", sub: "We reply within a few hours", tint: "#e8f5f0", color: PRIMARY },
               { icon: Phone, label: "Call us", value: "+237 6 90 12 34 56", sub: "Mon–Fri, 8am–6pm WAT", tint: "#f0ebd8", color: BLUE },
-              { icon: MapPin, label: "Visit us", value: "Akwa, Douala, Cameroon", sub: "Bonanjo District, 5th floor", tint: "#e8f5f0", color: ORANGE },
+              { icon: MapPin, label: "Visit us", value: "Akwa, Douala, Cameroon", sub: "Bonanjo District, 5th floor", tint: "#e8f5f0", color: PRIMARY },
             ].map((c) => (
               <div key={c.label} className="flex gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-neutral-100">
                 <span className="grid size-12 shrink-0 place-items-center rounded-2xl" style={{ background: c.tint }}>
@@ -76,7 +76,7 @@ function Contact() {
             {/* Quick links */}
             <div className="rounded-2xl bg-gradient-to-br from-[#f5f0e1] to-[#f5f0e1] p-5">
               <div className="flex items-center gap-2 text-sm font-extrabold">
-                <MessageCircle className="size-4" style={{ color: ORANGE }} />
+                <MessageCircle className="size-4" style={{ color: PRIMARY }} />
                 Quick answers
               </div>
               <div className="mt-3 space-y-1.5">
@@ -148,7 +148,7 @@ function Contact() {
                   type="submit"
                   disabled={sending}
                   className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white shadow-md transition hover:opacity-90 disabled:opacity-60"
-                  style={{ background: ORANGE }}
+                  style={{ background: PRIMARY }}
                 >
                   {sending ? "Sending…" : (<>Send message <Send className="size-4" /></>)}
                 </button>

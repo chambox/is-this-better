@@ -24,12 +24,12 @@ export function SiteHeader() {
         <Link to="/" className="flex items-center gap-2">
           <span
             className="grid size-8 place-items-center rounded-xl shadow-sm"
-            style={{ background: `linear-gradient(135deg, ${BRAND_ORANGE}, #c9a84c)` }}
+            style={{ background: `linear-gradient(135deg, ${BRAND_PRIMARY}, #c9a84c)` }}
           >
             <Heart className="size-4 fill-white text-white" />
           </span>
           <span className="text-xl font-extrabold tracking-tight text-neutral-900">
-            give<span style={{ color: BRAND_ORANGE }}>hope</span>
+            give<span style={{ color: BRAND_PRIMARY }}>hope</span>
           </span>
         </Link>
 
@@ -83,7 +83,7 @@ export function SiteHeader() {
               to="/dashboard"
               className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm font-bold text-neutral-800 hover:bg-neutral-50"
             >
-              <span className="grid size-6 place-items-center rounded-full bg-[#E8F4FF]">
+              <span className="grid size-6 place-items-center rounded-full bg-[#f0ebd8]">
                 <UserIcon className="size-3.5 text-[#c9a84c]" />
               </span>
               {user.name.split(" ")[0]}
@@ -96,7 +96,7 @@ export function SiteHeader() {
           <Link
             to="/start"
             className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
-            style={{ background: BRAND_ORANGE }}
+            style={{ background: BRAND_PRIMARY }}
           >
             Start a Fundraiser
           </Link>
@@ -150,7 +150,7 @@ export function SiteHeader() {
               to="/start"
               onClick={() => setMobileOpen(false)}
               className="mt-2 inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-sm"
-              style={{ background: BRAND_ORANGE }}
+              style={{ background: BRAND_PRIMARY }}
             >
               Start a Fundraiser
             </Link>

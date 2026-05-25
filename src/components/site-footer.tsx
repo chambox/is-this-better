@@ -13,12 +13,12 @@ export function SiteFooter() {
             <Link to="/" className="flex items-center gap-2">
               <span
                 className="grid size-8 place-items-center rounded-xl shadow-sm"
-                style={{ background: `linear-gradient(135deg, ${BRAND_ORANGE}, #c9a84c)` }}
+                style={{ background: `linear-gradient(135deg, ${BRAND_PRIMARY}, #c9a84c)` }}
               >
                 <Heart className="size-4 fill-white text-white" />
               </span>
               <span className="text-xl font-extrabold tracking-tight">
-                give<span style={{ color: BRAND_ORANGE }}>hope</span>
+                give<span style={{ color: BRAND_PRIMARY }}>hope</span>
               </span>
             </Link>
             <p className="mt-4 max-w-sm text-sm text-neutral-600">

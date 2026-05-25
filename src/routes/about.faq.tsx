@@ -38,7 +38,7 @@ function FAQ() {
 
       <section className="bg-gradient-to-br from-[#f5f0e1] via-white to-[#f5f0e1]">
         <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-8 sm:py-24">
-          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>FAQ</span>
+          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>FAQ</span>
           <h1 className="mt-3 text-4xl font-black sm:text-6xl">Frequently asked questions</h1>
           <p className="mx-auto mt-5 max-w-xl text-lg text-neutral-600">
             Quick answers to the things people ask us most. Can't find what you need? We're here to help.
@@ -59,7 +59,7 @@ function FAQ() {
                   <span className="text-base font-extrabold">{f.q}</span>
                   <ChevronDown
                     className={`size-5 shrink-0 transition ${isOpen ? "rotate-180" : ""}`}
-                    style={{ color: ORANGE }}
+                    style={{ color: PRIMARY }}
                   />
                 </button>
                 {isOpen && (
@@ -71,13 +71,13 @@ function FAQ() {
         </div>
 
         <div className="mt-12 rounded-3xl bg-gradient-to-br from-[#f5f0e1] to-[#f5f0e1] p-8 text-center sm:p-10">
-          <MessageCircle className="mx-auto size-8" style={{ color: ORANGE }} />
+          <MessageCircle className="mx-auto size-8" style={{ color: PRIMARY }} />
           <h2 className="mt-3 text-2xl font-black">Still have questions?</h2>
           <p className="mt-2 text-sm text-neutral-600">Our support team usually replies within a few hours.</p>
           <Link
             to="/contact"
             className="mt-5 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-bold text-white shadow-md transition hover:opacity-90"
-            style={{ background: ORANGE }}
+            style={{ background: PRIMARY }}
           >
             Contact support
           </Link>

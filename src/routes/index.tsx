@@ -50,7 +50,7 @@ function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#f5f0e1] via-white to-[#f5f0e1]">
         <div className="pointer-events-none absolute -left-32 top-10 size-80 rounded-full bg-[#e8f5f0] opacity-60 blur-3xl" />
-        <div className="pointer-events-none absolute -right-32 bottom-0 size-96 rounded-full bg-[#D7EEFF] opacity-70 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 bottom-0 size-96 rounded-full bg-[#f0ebd8] opacity-70 blur-3xl" />
 
         <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-8 sm:py-24 lg:grid-cols-2 lg:items-center">
           <div>
@@ -69,8 +69,8 @@ function Home() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 to="/start"
-                className="inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#FFD0AC] transition hover:opacity-90"
-                style={{ background: ORANGE }}
+                className="inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#d4e8df] transition hover:opacity-90"
+                style={{ background: PRIMARY }}
               >
                 Start a Fundraiser
               </Link>
@@ -137,7 +137,7 @@ function Home() {
             <div className="absolute -bottom-4 -left-4 hidden w-56 rounded-2xl bg-white p-4 shadow-2xl ring-1 ring-black/5 sm:block">
               <div className="flex items-center gap-2">
                 <span className="grid size-8 place-items-center rounded-full" style={{ background: "#FFEFE0" }}>
-                  <Heart className="size-4" style={{ color: ORANGE }} />
+                  <Heart className="size-4" style={{ color: PRIMARY }} />
                 </span>
                 <div>
                   <div className="text-[11px] font-semibold text-neutral-500">Just now</div>
@@ -154,7 +154,7 @@ function Home() {
       <section id="featured" className="mx-auto max-w-7xl scroll-mt-20 px-4 py-20 sm:px-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>
               Featured Fundraisers
             </span>
             <h2 className="mt-2 text-3xl font-black sm:text-4xl">Causes that need you right now</h2>
@@ -234,7 +234,7 @@ function Home() {
                       <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-100">
                         <div
                           className="h-full rounded-full"
-                          style={{ width: `${percent}%`, background: `linear-gradient(90deg, ${ORANGE}, ${BLUE})` }}
+                          style={{ width: `${percent}%`, background: `linear-gradient(90deg, ${PRIMARY}, ${BLUE})` }}
                         />
                       </div>
                       <div className="mt-2 flex items-baseline justify-between">
@@ -243,7 +243,7 @@ function Home() {
                       </div>
                       <button
                         className="mt-4 w-full rounded-full py-2.5 text-sm font-bold text-white transition group-hover:opacity-90"
-                        style={{ background: ORANGE }}
+                        style={{ background: PRIMARY }}
                       >
                         Donate
                       </button>
@@ -260,7 +260,7 @@ function Home() {
       <section className="bg-[#FAFBFD]">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-8">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>How It Works</span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>How It Works</span>
             <h2 className="mt-2 text-3xl font-black sm:text-4xl">Three simple steps</h2>
             <p className="mx-auto mt-3 max-w-xl text-neutral-600">Launch a successful fundraiser in under 5 minutes — no setup fees.</p>
           </div>
@@ -273,7 +273,7 @@ function Home() {
               <div key={s.n} className="group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
                 <span className="absolute right-5 top-5 text-5xl font-black text-neutral-100">{s.n}</span>
                 <span className="grid size-12 place-items-center rounded-2xl" style={{ background: "#e8f5f0" }}>
-                  <s.icon className="size-6" style={{ color: ORANGE }} />
+                  <s.icon className="size-6" style={{ color: PRIMARY }} />
                 </span>
                 <h3 className="mt-5 text-lg font-extrabold">{s.title}</h3>
                 <p className="mt-2 text-sm text-neutral-600">{s.body}</p>
@@ -286,16 +286,16 @@ function Home() {
       {/* Categories */}
       <section id="categories" className="mx-auto max-w-7xl scroll-mt-20 px-4 py-20 sm:px-8">
         <div className="text-center">
-          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>Categories</span>
+          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>Categories</span>
           <h2 className="mt-2 text-3xl font-black sm:text-4xl">Find a cause close to your heart</h2>
         </div>
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
           {[
-            { icon: Stethoscope, label: "Medical", tint: "#e8f5f0", color: ORANGE },
+            { icon: Stethoscope, label: "Medical", tint: "#e8f5f0", color: PRIMARY },
             { icon: GraduationCap, label: "Education", tint: "#f0ebd8", color: "#c9a84c" },
-            { icon: Siren, label: "Emergency", tint: "#e8f5f0", color: ORANGE },
+            { icon: Siren, label: "Emergency", tint: "#e8f5f0", color: PRIMARY },
             { icon: Building2, label: "Nonprofit", tint: "#f0ebd8", color: "#c9a84c" },
-            { icon: Flower2, label: "Memorial", tint: "#e8f5f0", color: ORANGE },
+            { icon: Flower2, label: "Memorial", tint: "#e8f5f0", color: PRIMARY },
             { icon: HandHeart, label: "Community", tint: "#f0ebd8", color: "#c9a84c" },
           ].map((cat) => (
             <button
@@ -319,7 +319,7 @@ function Home() {
       <section id="stories" className="scroll-mt-20 bg-gradient-to-br from-[#f5f0e1] via-white to-[#f5f0e1]">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-8">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>Success Stories</span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>Success Stories</span>
             <h2 className="mt-2 text-3xl font-black sm:text-4xl">Real impact, real people</h2>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -341,7 +341,7 @@ function Home() {
               },
             ].map((t) => (
               <div key={t.name} className="rounded-3xl bg-white p-7 shadow-sm ring-1 ring-neutral-100 transition hover:-translate-y-1 hover:shadow-xl">
-                <Quote className="size-7" style={{ color: ORANGE }} />
+                <Quote className="size-7" style={{ color: PRIMARY }} />
                 <p className="mt-3 text-sm leading-relaxed text-neutral-700">"{t.quote}"</p>
                 <div className="mt-5 flex items-center gap-3 border-t border-neutral-100 pt-4">
                   <img src={t.avatar} alt={t.name} className="size-11 rounded-full object-cover" />
@@ -365,7 +365,7 @@ function Home() {
       <section id="trust" className="mx-auto max-w-7xl scroll-mt-20 px-4 py-20 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>Trust & Safety</span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>Trust & Safety</span>
             <h2 className="mt-2 text-3xl font-black sm:text-4xl">Your donation is in safe hands</h2>
             <p className="mt-3 max-w-md text-neutral-600">
               From the moment you give to the moment funds reach the cause, every step is monitored, verified, and backed by our guarantee.
@@ -399,7 +399,7 @@ function Home() {
             </div>
             <div className="absolute -right-4 -top-4 hidden rounded-2xl bg-white p-4 shadow-2xl ring-1 ring-black/5 sm:block">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="size-5" style={{ color: ORANGE }} />
+                <ShieldCheck className="size-5" style={{ color: PRIMARY }} />
                 <div>
                   <div className="text-[11px] font-semibold text-neutral-500">Guarantee</div>
                   <div className="text-sm font-extrabold">100% refund promise</div>
@@ -442,7 +442,7 @@ function Home() {
               <Link
                 to="/start"
                 className="inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm font-bold text-white shadow-lg transition hover:opacity-90"
-                style={{ background: ORANGE }}
+                style={{ background: PRIMARY }}
               >
                 Start a Fundraiser
               </Link>

@@ -24,7 +24,7 @@ function HowItWorks() {
 
       <section className="bg-gradient-to-br from-[#f5f0e1] via-white to-[#f5f0e1]">
         <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-8 sm:py-28">
-          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>How It Works</span>
+          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: PRIMARY }}>How It Works</span>
           <h1 className="mt-3 text-4xl font-black sm:text-6xl">From idea to impact in minutes</h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-neutral-600">
             Whether it's a personal cause or a community emergency, our platform makes it effortless to rally support and put donations to work.
@@ -32,7 +32,7 @@ function HowItWorks() {
           <Link
             to="/start"
             className="mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-white shadow-lg transition hover:opacity-90"
-            style={{ background: ORANGE }}
+            style={{ background: PRIMARY }}
           >
             Start your fundraiser <ArrowRight className="size-4" />
           </Link>
@@ -49,7 +49,7 @@ function HowItWorks() {
             <div key={s.n} className="relative rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
               <span className="absolute right-6 top-6 text-6xl font-black text-neutral-100">{s.n}</span>
               <span className="grid size-14 place-items-center rounded-2xl" style={{ background: "#e8f5f0" }}>
-                <s.icon className="size-7" style={{ color: ORANGE }} />
+                <s.icon className="size-7" style={{ color: PRIMARY }} />
               </span>
               <h3 className="mt-5 text-xl font-extrabold">{s.title}</h3>
               <p className="mt-3 text-sm text-neutral-600">{s.body}</p>
@@ -71,7 +71,7 @@ function HowItWorks() {
               "Mobile-friendly campaign pages that look great anywhere",
             ].map((f) => (
               <div key={f} className="flex items-start gap-3 rounded-2xl bg-white p-5 ring-1 ring-neutral-100">
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0" style={{ color: ORANGE }} />
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0" style={{ color: PRIMARY }} />
                 <span className="text-sm text-neutral-700">{f}</span>
               </div>
             ))}
