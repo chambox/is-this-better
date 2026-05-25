@@ -29,7 +29,7 @@ export const Route = createFileRoute("/c/$slug")({
       <div>
         <h1 className="text-2xl font-extrabold text-neutral-900">Fundraiser not found</h1>
         <p className="mt-2 text-sm text-neutral-600">It may have been removed or the link is wrong.</p>
-        <Link to="/" className="mt-6 inline-flex items-center gap-1 rounded-full bg-[#02a95c] px-5 py-2.5 text-sm font-extrabold text-white">Browse fundraisers</Link>
+        <Link to="/" className="mt-6 inline-flex items-center gap-1 rounded-full bg-[#0d7a5f] px-5 py-2.5 text-sm font-extrabold text-white">Browse fundraisers</Link>
       </div>
     </div>
   ),
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/c/$slug")({
 });
 
 const TEAM = [
-  { name: "Marie N.", role: "Committee chair", initial: "M", color: "bg-[#02a95c]" },
+  { name: "Marie N.", role: "Committee chair", initial: "M", color: "bg-[#0d7a5f]" },
   { name: "Pastor Joseph K.", role: "Community liaison", initial: "J", color: "bg-[#1877f2]" },
   { name: "Dr. Aline T.", role: "Medical coordinator", initial: "A", color: "bg-[#ff6600]" },
   { name: "Eric M.", role: "Treasurer", initial: "E", color: "bg-[#635bff]" },
@@ -82,7 +82,7 @@ function CampaignPage() {
       <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-6xl items-center px-4 sm:px-6">
           <Link to="/" className="flex items-center gap-1.5">
-            <span className="grid size-7 place-items-center rounded-full bg-[#02a95c]">
+            <span className="grid size-7 place-items-center rounded-full bg-[#0d7a5f]">
               <Heart className="size-3.5 fill-white text-white" />
             </span>
             <span className="text-lg font-extrabold tracking-tight">givehope</span>
@@ -92,7 +92,7 @@ function CampaignPage() {
             <button onClick={handleNativeShare} className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50">
               <Share2 className="size-3.5" /> Share
             </button>
-            <Link to="/donate" search={{ c: campaign.slug }} className="inline-flex items-center gap-1.5 rounded-full bg-[#02a95c] px-4 py-1.5 text-sm font-extrabold text-white transition hover:bg-[#028f4e]">
+            <Link to="/donate" search={{ c: campaign.slug }} className="inline-flex items-center gap-1.5 rounded-full bg-[#0d7a5f] px-4 py-1.5 text-sm font-extrabold text-white transition hover:bg-[#0a634c]">
               <Heart className="size-3.5 fill-white" /> Donate
             </Link>
           </div>
@@ -107,7 +107,7 @@ function CampaignPage() {
                 {campaign.image ? (
                   <img src={campaign.image} alt={campaign.title} className="h-full w-full object-cover" />
                 ) : (
-                  <div className="grid h-full w-full place-items-center bg-gradient-to-br from-[#02a95c] to-[#016e3d] text-white">
+                  <div className="grid h-full w-full place-items-center bg-gradient-to-br from-[#0d7a5f] to-[#064e3b] text-white">
                     <span className="text-6xl font-black opacity-30">{campaign.title.charAt(0)}</span>
                   </div>
                 )}
@@ -117,7 +117,7 @@ function CampaignPage() {
                   aria-label="Play video message"
                 >
                   <span className="grid size-16 place-items-center rounded-full bg-white/95 shadow-xl">
-                    <Play className="size-7 translate-x-0.5 fill-[#02a95c] text-[#02a95c]" />
+                    <Play className="size-7 translate-x-0.5 fill-[#0d7a5f] text-[#0d7a5f]" />
                   </span>
                 </button>
                 <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-neutral-900">
@@ -155,8 +155,8 @@ function CampaignPage() {
                   <ol className="mt-5 space-y-6 border-l-2 border-neutral-100 pl-6">
                     {campaign.updates.map((u, i) => (
                       <li key={i} className="relative">
-                        <span className="absolute -left-[31px] grid size-5 place-items-center rounded-full bg-white ring-2 ring-[#02a95c]">
-                          <span className="size-2 rounded-full bg-[#02a95c]" />
+                        <span className="absolute -left-[31px] grid size-5 place-items-center rounded-full bg-white ring-2 ring-[#0d7a5f]">
+                          <span className="size-2 rounded-full bg-[#0d7a5f]" />
                         </span>
                         <div className="flex items-center gap-2 text-xs font-semibold text-neutral-500">
                           <TrendingUp className="size-3.5" /> {u.date}
@@ -187,15 +187,15 @@ function CampaignPage() {
                 </div>
                 <div className="mt-5 grid gap-3 sm:grid-cols-3">
                   <div className="flex items-start gap-2 rounded-xl bg-neutral-50 p-3">
-                    <Stethoscope className="mt-0.5 size-4 shrink-0 text-[#02a95c]" />
+                    <Stethoscope className="mt-0.5 size-4 shrink-0 text-[#0d7a5f]" />
                     <div><p className="text-xs font-bold">Verified organizer</p><p className="text-[11px] text-neutral-600">Identity confirmed.</p></div>
                   </div>
                   <div className="flex items-start gap-2 rounded-xl bg-neutral-50 p-3">
-                    <ClipboardList className="mt-0.5 size-4 shrink-0 text-[#02a95c]" />
+                    <ClipboardList className="mt-0.5 size-4 shrink-0 text-[#0d7a5f]" />
                     <div><p className="text-xs font-bold">Receipts on file</p><p className="text-[11px] text-neutral-600">Every expense documented.</p></div>
                   </div>
                   <div className="flex items-start gap-2 rounded-xl bg-neutral-50 p-3">
-                    <HeartHandshake className="mt-0.5 size-4 shrink-0 text-[#02a95c]" />
+                    <HeartHandshake className="mt-0.5 size-4 shrink-0 text-[#0d7a5f]" />
                     <div><p className="text-xs font-bold">Community-run</p><p className="text-[11px] text-neutral-600">Volunteer committee.</p></div>
                   </div>
                 </div>
@@ -211,11 +211,11 @@ function CampaignPage() {
                   <span className="text-sm font-semibold text-neutral-500">FCFA raised of {fmtFCFA(campaign.goal)} goal</span>
                 </div>
                 <div className="h-2.5 w-full overflow-hidden rounded-full bg-neutral-100">
-                  <div className="h-full rounded-full bg-[#02a95c] transition-all" style={{ width: `${percent}%` }} />
+                  <div className="h-full rounded-full bg-[#0d7a5f] transition-all" style={{ width: `${percent}%` }} />
                 </div>
                 <p className="mt-2 text-sm font-semibold text-neutral-600">{fmtFCFA(remaining)} FCFA still needed · {campaign.donors.length} donors</p>
 
-                <Link to="/donate" search={{ c: campaign.slug }} className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-3.5 text-base font-extrabold text-white shadow-sm transition hover:bg-[#028f4e] active:scale-[0.99]">
+                <Link to="/donate" search={{ c: campaign.slug }} className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-[#0d7a5f] py-3.5 text-base font-extrabold text-white shadow-sm transition hover:bg-[#0a634c] active:scale-[0.99]">
                   <Heart className="size-4 fill-white" /> Donate now
                 </Link>
 
@@ -225,13 +225,13 @@ function CampaignPage() {
                   <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="flex h-10 items-center justify-center rounded-full bg-[#1877f2] text-xs font-extrabold text-white hover:opacity-90">Facebook</a>
                   <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="flex h-10 items-center justify-center rounded-full bg-neutral-900 text-xs font-extrabold text-white hover:opacity-90">X</a>
                   <button onClick={handleCopy} className="flex h-10 items-center justify-center gap-1 rounded-full border border-neutral-200 bg-white text-xs font-bold text-neutral-700 hover:bg-neutral-50">
-                    {copied ? <Check className="size-3.5 text-[#02a95c]" /> : <Copy className="size-3.5" />}
+                    {copied ? <Check className="size-3.5 text-[#0d7a5f]" /> : <Copy className="size-3.5" />}
                     {copied ? "Copied" : "Copy"}
                   </button>
                 </div>
 
                 <div className="mt-4 flex items-start gap-2.5 rounded-xl border border-neutral-200 p-3">
-                  <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[#02a95c]" />
+                  <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[#0d7a5f]" />
                   <p className="text-xs leading-relaxed text-neutral-600">
                     <span className="font-bold text-neutral-900">Donation protected.</span> Funds released directly to the verified organizer.
                   </p>
@@ -256,7 +256,7 @@ function CampaignPage() {
                     ))}
                   </div>
                   {campaign.donors.length > 3 && (
-                    <button onClick={() => setShowAllDonors(!showAllDonors)} className="mt-4 flex items-center gap-1 text-sm font-bold text-[#02a95c] hover:underline">
+                    <button onClick={() => setShowAllDonors(!showAllDonors)} className="mt-4 flex items-center gap-1 text-sm font-bold text-[#0d7a5f] hover:underline">
                       {showAllDonors ? "Show less" : "See all donations"} <ChevronRight className="size-3.5" />
                     </button>
                   )}
@@ -268,7 +268,7 @@ function CampaignPage() {
               <div className="px-5 py-6 sm:px-8">
                 <h2 className="text-lg font-extrabold">Organized by</h2>
                 <div className="mt-4 flex items-center gap-3">
-                  <div className="grid size-10 place-items-center rounded-full bg-[#02a95c] text-sm font-extrabold text-white">{campaign.organizer.charAt(0)}</div>
+                  <div className="grid size-10 place-items-center rounded-full bg-[#0d7a5f] text-sm font-extrabold text-white">{campaign.organizer.charAt(0)}</div>
                   <div>
                     <p className="text-sm font-bold">{campaign.organizer}</p>
                     <p className="text-xs text-neutral-500">{campaign.location}</p>
@@ -287,7 +287,7 @@ function CampaignPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <Link to="/" className="flex items-center gap-1.5">
-              <span className="grid size-6 place-items-center rounded-full bg-[#02a95c]"><Heart className="size-2.5 fill-white text-white" /></span>
+              <span className="grid size-6 place-items-center rounded-full bg-[#0d7a5f]"><Heart className="size-2.5 fill-white text-white" /></span>
               <span className="text-sm font-extrabold tracking-tight">givehope</span>
             </Link>
             <div className="flex items-center gap-4 text-xs text-neutral-500">
@@ -304,11 +304,11 @@ function CampaignPage() {
         <div className="mx-auto flex max-w-6xl items-center gap-3">
           <div className="min-w-0 flex-1">
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-neutral-100">
-              <div className="h-full rounded-full bg-[#02a95c]" style={{ width: `${percent}%` }} />
+              <div className="h-full rounded-full bg-[#0d7a5f]" style={{ width: `${percent}%` }} />
             </div>
             <p className="mt-1 truncate text-xs font-semibold text-neutral-600">{fmtFCFA(campaign.raised)} of {fmtFCFA(campaign.goal)} FCFA</p>
           </div>
-          <Link to="/donate" search={{ c: campaign.slug }} className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#02a95c] px-5 py-2.5 text-sm font-extrabold text-white shadow-sm transition hover:bg-[#028f4e]">
+          <Link to="/donate" search={{ c: campaign.slug }} className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#0d7a5f] px-5 py-2.5 text-sm font-extrabold text-white shadow-sm transition hover:bg-[#0a634c]">
             <Heart className="size-4 fill-white" /> Donate
           </Link>
         </div>

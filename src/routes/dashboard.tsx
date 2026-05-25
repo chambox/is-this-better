@@ -54,7 +54,7 @@ function Dashboard() {
       <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-6xl items-center px-4 sm:px-6">
           <Link to="/" className="flex items-center gap-1.5">
-            <span className="grid size-7 place-items-center rounded-full bg-[#02a95c]">
+            <span className="grid size-7 place-items-center rounded-full bg-[#0d7a5f]">
               <Heart className="size-3.5 fill-white text-white" />
             </span>
             <span className="text-lg font-extrabold tracking-tight">givehope</span>
@@ -62,7 +62,7 @@ function Dashboard() {
           <div className="ml-auto flex items-center gap-3">
             <Link
               to="/start"
-              className="hidden items-center gap-1.5 rounded-full bg-[#02a95c] px-4 py-1.5 text-sm font-extrabold text-white transition hover:bg-[#028f4e] sm:inline-flex"
+              className="hidden items-center gap-1.5 rounded-full bg-[#0d7a5f] px-4 py-1.5 text-sm font-extrabold text-white transition hover:bg-[#0a634c] sm:inline-flex"
             >
               <Plus className="size-3.5" /> New fundraiser
             </Link>
@@ -73,7 +73,7 @@ function Dashboard() {
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
         <div className="mb-8">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#02a95c]">Dashboard</p>
+          <p className="text-xs font-bold uppercase tracking-widest text-[#0d7a5f]">Dashboard</p>
           <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
             Hi {user.name.split(" ")[0]} 👋
           </h1>
@@ -93,7 +93,7 @@ function Dashboard() {
           <section className="lg:col-span-2">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-xl font-extrabold">Your fundraisers</h2>
-              <Link to="/start" className="inline-flex items-center gap-1 text-sm font-bold text-[#02a95c] hover:underline sm:hidden">
+              <Link to="/start" className="inline-flex items-center gap-1 text-sm font-bold text-[#0d7a5f] hover:underline sm:hidden">
                 <Plus className="size-3.5" /> New
               </Link>
             </div>
@@ -104,7 +104,7 @@ function Dashboard() {
                 <p className="mt-1 text-sm text-neutral-600">Launch one in under 2 minutes.</p>
                 <Link
                   to="/start"
-                  className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#02a95c] px-5 py-2.5 text-sm font-extrabold text-white"
+                  className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#0d7a5f] px-5 py-2.5 text-sm font-extrabold text-white"
                 >
                   <Plus className="size-4" /> Start a fundraiser
                 </Link>
@@ -129,7 +129,7 @@ function Dashboard() {
               <ul className="divide-y divide-neutral-100 overflow-hidden rounded-2xl border border-neutral-200 bg-white">
                 {recentDonations.map((d, i) => (
                   <li key={i} className="flex items-center gap-3 px-4 py-3">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[#c2f17a] text-sm font-extrabold text-neutral-900">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[#d4e8df] text-sm font-extrabold text-neutral-900">
                       {d.avatar}
                     </span>
                     <div className="min-w-0 flex-1">
@@ -137,7 +137,7 @@ function Dashboard() {
                       <p className="truncate text-[11px] text-neutral-500">{d.campaign}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-extrabold text-[#02a95c]">{fmtFCFA(d.amount)}</p>
+                      <p className="text-sm font-extrabold text-[#0d7a5f]">{fmtFCFA(d.amount)}</p>
                       <p className="text-[10px] text-neutral-400">{d.time}</p>
                     </div>
                   </li>
@@ -187,7 +187,7 @@ function CampaignRow({ campaign }: { campaign: ReturnType<typeof useMyCampaigns>
   return (
     <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
       <div className="flex items-start gap-4 p-4 sm:p-5">
-        <div className="grid size-16 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#02a95c] to-[#016e3d] text-2xl font-black text-white/40">
+        <div className="grid size-16 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#0d7a5f] to-[#064e3b] text-2xl font-black text-white/40">
           {campaign.title.charAt(0)}
         </div>
         <div className="min-w-0 flex-1">
@@ -214,7 +214,7 @@ function CampaignRow({ campaign }: { campaign: ReturnType<typeof useMyCampaigns>
 
           <div className="mt-3">
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-neutral-100">
-              <div className="h-full rounded-full bg-[#02a95c]" style={{ width: `${percent}%` }} />
+              <div className="h-full rounded-full bg-[#0d7a5f]" style={{ width: `${percent}%` }} />
             </div>
             <div className="mt-1.5 flex items-baseline justify-between">
               <span className="text-sm font-extrabold">{fmtFCFA(campaign.raised)} FCFA</span>
@@ -300,7 +300,7 @@ function UserMenu() {
         <span className="block text-xs font-bold leading-tight">{user.name}</span>
         <span className="block text-[10px] text-neutral-500 leading-tight">{user.email}</span>
       </span>
-      <span className="grid size-9 place-items-center rounded-full bg-[#02a95c] text-sm font-extrabold text-white">
+      <span className="grid size-9 place-items-center rounded-full bg-[#0d7a5f] text-sm font-extrabold text-white">
         {user.avatar}
       </span>
       <button

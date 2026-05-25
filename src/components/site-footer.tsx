@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Heart, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
-const BRAND_ORANGE = "#FF8C42";
+const BRAND_PRIMARY = "#0d7a5f";
 
 export function SiteFooter() {
   return (
@@ -13,7 +13,7 @@ export function SiteFooter() {
             <Link to="/" className="flex items-center gap-2">
               <span
                 className="grid size-8 place-items-center rounded-xl shadow-sm"
-                style={{ background: `linear-gradient(135deg, ${BRAND_ORANGE}, #6EC6FF)` }}
+                style={{ background: `linear-gradient(135deg, ${BRAND_ORANGE}, #c9a84c)` }}
               >
                 <Heart className="size-4 fill-white text-white" />
               </span>
@@ -29,7 +29,7 @@ export function SiteFooter() {
                 <a
                   key={i}
                   href="#"
-                  className="grid size-9 place-items-center rounded-full border border-neutral-200 text-neutral-600 transition hover:border-[#FF8C42] hover:text-[#FF8C42]"
+                  className="grid size-9 place-items-center rounded-full border border-neutral-200 text-neutral-600 transition hover:border-[#0d7a5f] hover:text-[#0d7a5f]"
                   aria-label="Social link"
                 >
                   <Icon className="size-4" />
@@ -71,9 +71,9 @@ export function SiteFooter() {
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-neutral-200 pt-6 text-xs text-neutral-500 sm:flex-row">
           <span>&copy; {new Date().getFullYear()} givehope. All rights reserved.</span>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-[#FF8C42]">Terms</a>
-            <a href="#" className="hover:text-[#FF8C42]">Privacy</a>
-            <a href="#" className="hover:text-[#FF8C42]">Cookies</a>
+            <a href="#" className="hover:text-[#0d7a5f]">Terms</a>
+            <a href="#" className="hover:text-[#0d7a5f]">Privacy</a>
+            <a href="#" className="hover:text-[#0d7a5f]">Cookies</a>
           </div>
         </div>
       </div>
@@ -94,7 +94,7 @@ function FooterCol({
       <ul className="mt-4 space-y-2.5 text-sm text-neutral-600">
         {links.map((l) => (
           <li key={l.label}>
-            <Link to={l.to} hash={l.hash} className="hover:text-[#FF8C42]">
+            <Link to={l.to} hash={l.hash} className="hover:text-[#0d7a5f]">
               {l.label}
             </Link>
           </li>

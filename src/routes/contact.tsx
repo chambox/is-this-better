@@ -5,8 +5,8 @@ import { toast } from "sonner";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
-const ORANGE = "#FF8C42";
-const BLUE = "#3FA7E0";
+const PRIMARY = "#0d7a5f";
+const GOLD = "#c9a84c";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -42,7 +42,7 @@ function Contact() {
     <div className="min-h-screen bg-white text-neutral-900">
       <SiteHeader />
 
-      <section className="bg-gradient-to-br from-[#EFF8FF] via-white to-[#FFF7F0]">
+      <section className="bg-gradient-to-br from-[#f5f0e1] via-white to-[#f5f0e1]">
         <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-8 sm:py-24">
           <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>Get In Touch</span>
           <h1 className="mt-3 text-4xl font-black sm:text-6xl">We're here to help</h1>
@@ -57,9 +57,9 @@ function Contact() {
           {/* Contact info */}
           <div className="space-y-4 lg:col-span-1">
             {[
-              { icon: Mail, label: "Email us", value: "support@givehope.com", sub: "We reply within a few hours", tint: "#FFF1E5", color: ORANGE },
-              { icon: Phone, label: "Call us", value: "+237 6 90 12 34 56", sub: "Mon–Fri, 8am–6pm WAT", tint: "#DCEEFF", color: BLUE },
-              { icon: MapPin, label: "Visit us", value: "Akwa, Douala, Cameroon", sub: "Bonanjo District, 5th floor", tint: "#FFF1E5", color: ORANGE },
+              { icon: Mail, label: "Email us", value: "support@givehope.com", sub: "We reply within a few hours", tint: "#e8f5f0", color: ORANGE },
+              { icon: Phone, label: "Call us", value: "+237 6 90 12 34 56", sub: "Mon–Fri, 8am–6pm WAT", tint: "#f0ebd8", color: BLUE },
+              { icon: MapPin, label: "Visit us", value: "Akwa, Douala, Cameroon", sub: "Bonanjo District, 5th floor", tint: "#e8f5f0", color: ORANGE },
             ].map((c) => (
               <div key={c.label} className="flex gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-neutral-100">
                 <span className="grid size-12 shrink-0 place-items-center rounded-2xl" style={{ background: c.tint }}>
@@ -74,7 +74,7 @@ function Contact() {
             ))}
 
             {/* Quick links */}
-            <div className="rounded-2xl bg-gradient-to-br from-[#FFF7F0] to-[#EFF8FF] p-5">
+            <div className="rounded-2xl bg-gradient-to-br from-[#f5f0e1] to-[#f5f0e1] p-5">
               <div className="flex items-center gap-2 text-sm font-extrabold">
                 <MessageCircle className="size-4" style={{ color: ORANGE }} />
                 Quick answers
@@ -88,7 +88,7 @@ function Contact() {
                   <Link
                     key={l.label}
                     to={l.to}
-                    className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-sm font-semibold text-neutral-700 hover:text-[#FF8C42]"
+                    className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-sm font-semibold text-neutral-700 hover:text-[#0d7a5f]"
                   >
                     {l.label} <ChevronRight className="size-4" />
                   </Link>
@@ -135,7 +135,7 @@ function Contact() {
                   onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                   placeholder="Tell us a bit more…"
                   rows={6}
-                  className="mt-1.5 w-full rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[#FF8C42] focus:ring-2 focus:ring-[#FFE2CB]"
+                  className="mt-1.5 w-full rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[#0d7a5f] focus:ring-2 focus:ring-[#e8f5f0]"
                 />
               </div>
 
@@ -190,7 +190,7 @@ function Field({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="mt-1.5 w-full rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[#FF8C42] focus:ring-2 focus:ring-[#FFE2CB]"
+        className="mt-1.5 w-full rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[#0d7a5f] focus:ring-2 focus:ring-[#e8f5f0]"
       />
     </div>
   );

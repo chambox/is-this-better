@@ -3,7 +3,7 @@ import { Sparkles, Share2, HandHeart, ArrowRight, CheckCircle2 } from "lucide-re
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
-const ORANGE = "#FF8C42";
+const PRIMARY = "#0d7a5f";
 
 export const Route = createFileRoute("/about/how-it-works")({
   head: () => ({
@@ -22,7 +22,7 @@ function HowItWorks() {
     <div className="min-h-screen bg-white text-neutral-900">
       <SiteHeader />
 
-      <section className="bg-gradient-to-br from-[#FFF7F0] via-white to-[#EFF8FF]">
+      <section className="bg-gradient-to-br from-[#f5f0e1] via-white to-[#f5f0e1]">
         <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-8 sm:py-28">
           <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE }}>How It Works</span>
           <h1 className="mt-3 text-4xl font-black sm:text-6xl">From idea to impact in minutes</h1>
@@ -48,7 +48,7 @@ function HowItWorks() {
           ].map((s) => (
             <div key={s.n} className="relative rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
               <span className="absolute right-6 top-6 text-6xl font-black text-neutral-100">{s.n}</span>
-              <span className="grid size-14 place-items-center rounded-2xl" style={{ background: "#FFF1E5" }}>
+              <span className="grid size-14 place-items-center rounded-2xl" style={{ background: "#e8f5f0" }}>
                 <s.icon className="size-7" style={{ color: ORANGE }} />
               </span>
               <h3 className="mt-5 text-xl font-extrabold">{s.title}</h3>

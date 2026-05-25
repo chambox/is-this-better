@@ -3,7 +3,7 @@ import { ShieldCheck, Lock, BadgeCheck, RefreshCw, AlertCircle } from "lucide-re
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
-const ORANGE = "#FF8C42";
+const PRIMARY = "#0d7a5f";
 
 export const Route = createFileRoute("/about/refund-guarantees")({
   head: () => ({
@@ -22,9 +22,9 @@ function Refund() {
     <div className="min-h-screen bg-white text-neutral-900">
       <SiteHeader />
 
-      <section className="bg-gradient-to-br from-[#EFF8FF] via-white to-[#FFF7F0]">
+      <section className="bg-gradient-to-br from-[#f5f0e1] via-white to-[#f5f0e1]">
         <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-8 sm:py-28">
-          <span className="grid mx-auto size-16 place-items-center rounded-2xl bg-white shadow-sm ring-1 ring-[#DCEEFF]">
+          <span className="grid mx-auto size-16 place-items-center rounded-2xl bg-white shadow-sm ring-1 ring-[#f0ebd8]">
             <ShieldCheck className="size-8" style={{ color: ORANGE }} />
           </span>
           <h1 className="mt-6 text-4xl font-black sm:text-6xl">The givehope Guarantee</h1>
@@ -42,7 +42,7 @@ function Refund() {
             { icon: Lock, title: "Secure transactions", body: "Bank-grade encryption protects your payment information end-to-end." },
           ].map((g) => (
             <div key={g.title} className="rounded-3xl bg-white p-7 shadow-sm ring-1 ring-neutral-100">
-              <span className="grid size-12 place-items-center rounded-2xl" style={{ background: "#FFF1E5" }}>
+              <span className="grid size-12 place-items-center rounded-2xl" style={{ background: "#e8f5f0" }}>
                 <g.icon className="size-6" style={{ color: ORANGE }} />
               </span>
               <h3 className="mt-5 text-lg font-extrabold">{g.title}</h3>
@@ -73,7 +73,7 @@ function Refund() {
             ))}
           </div>
 
-          <div className="mt-10 flex items-start gap-4 rounded-3xl border border-[#FFE2CB] bg-[#FFF7F0] p-6">
+          <div className="mt-10 flex items-start gap-4 rounded-3xl border border-[#e8f5f0] bg-[#f5f0e1] p-6">
             <AlertCircle className="mt-0.5 size-5 shrink-0" style={{ color: ORANGE }} />
             <div>
               <h4 className="text-sm font-extrabold">Need to report a fundraiser?</h4>

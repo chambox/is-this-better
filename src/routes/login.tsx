@@ -47,7 +47,7 @@ function LoginPage() {
       <header className="border-b border-neutral-200 bg-white">
         <div className="mx-auto flex h-16 max-w-6xl items-center px-4 sm:px-6">
           <Link to="/" className="flex items-center gap-1.5">
-            <span className="grid size-7 place-items-center rounded-full bg-[#02a95c]">
+            <span className="grid size-7 place-items-center rounded-full bg-[#0d7a5f]">
               <Heart className="size-3.5 fill-white text-white" />
             </span>
             <span className="text-lg font-extrabold tracking-tight">givehope</span>
@@ -69,7 +69,7 @@ function LoginPage() {
 
         <button
           onClick={handleDemo}
-          className="flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#02a95c] bg-[#eaf9ef] px-4 py-3 text-sm font-bold text-[#02a95c] transition hover:bg-[#dff4e7]"
+          className="flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#0d7a5f] bg-[#e8f5f0] px-4 py-3 text-sm font-bold text-[#0d7a5f] transition hover:bg-[#d4e8df]"
         >
           <Sparkles className="size-4" /> Try the demo account
         </button>
@@ -110,7 +110,7 @@ function LoginPage() {
           <button
             type="submit"
             disabled={busy}
-            className="w-full rounded-full bg-[#02a95c] py-3 text-sm font-extrabold text-white transition hover:bg-[#028f4e] disabled:opacity-60"
+            className="w-full rounded-full bg-[#0d7a5f] py-3 text-sm font-extrabold text-white transition hover:bg-[#0a634c] disabled:opacity-60"
           >
             {busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
           </button>
@@ -119,7 +119,7 @@ function LoginPage() {
             <button
               type="button"
               onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setError(undefined); }}
-              className="font-bold text-[#02a95c] hover:underline"
+              className="font-bold text-[#0d7a5f] hover:underline"
             >
               {mode === "signin" ? "Create an account" : "Sign in"}
             </button>

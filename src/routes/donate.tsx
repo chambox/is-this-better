@@ -201,7 +201,7 @@ function Donate() {
             </Link>
           )}
           <Link to="/" className="absolute left-1/2 flex -translate-x-1/2 items-center gap-1.5">
-            <span className="grid size-7 place-items-center rounded-full bg-[#02a95c]">
+            <span className="grid size-7 place-items-center rounded-full bg-[#0d7a5f]">
               <Heart className="size-3.5 fill-white text-white" />
             </span>
             <span className="text-lg font-extrabold tracking-tight text-neutral-900">
@@ -210,7 +210,7 @@ function Donate() {
           </Link>
           <div className="ml-auto hidden text-sm text-neutral-700 sm:block">
             Already have an account?{" "}
-            <Link to="/login" className="font-semibold text-[#02a95c] underline underline-offset-2 hover:text-[#028f4e]">
+            <Link to="/login" className="font-semibold text-[#0d7a5f] underline underline-offset-2 hover:text-[#0a634c]">
               Sign in
             </Link>
           </div>
@@ -230,7 +230,7 @@ function Donate() {
                   cx="36"
                   cy="36"
                   r={R}
-                  stroke="#02a95c"
+                  stroke="#0d7a5f"
                   strokeWidth="6"
                   fill="none"
                   strokeDasharray={C}
@@ -245,7 +245,7 @@ function Donate() {
             </div>
             <div>
               <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-neutral-900 sm:text-[34px]">
-                Just <span className="text-[#02a95c]">{fmt(remainingDisplay)} {currency}</span> to go!
+                Just <span className="text-[#0d7a5f]">{fmt(remainingDisplay)} {currency}</span> to go!
               </h1>
               <p className="mt-1 text-lg font-bold text-neutral-900">{campaign?.title ?? "Make an impact."}</p>
               <p className="mt-1 text-sm text-neutral-600">{campaign?.organizer ?? "givehope community"}</p>
@@ -289,7 +289,7 @@ function Donate() {
                     >
                       {fmt(v)}
                       {isSuggested && (
-                        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#c2f17a] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-neutral-900">
+                        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#d4e8df] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-neutral-900">
                           ♥ Suggested
                         </span>
                       )}
@@ -472,7 +472,7 @@ function Donate() {
                   type="checkbox"
                   checked={anonymous}
                   onChange={(e) => { setAnonymous(e.target.checked); setError("name", undefined); }}
-                  className="size-4 rounded border-neutral-300 text-[#02a95c] focus:ring-[#02a95c]"
+                  className="size-4 rounded border-neutral-300 text-[#0d7a5f] focus:ring-[#0d7a5f]"
                 />
                 Donate anonymously
               </label>
@@ -508,7 +508,7 @@ function Donate() {
             <button
               type="submit"
               disabled={submitting}
-              className="hidden w-full items-center justify-center gap-2 rounded-full bg-[#02a95c] py-4 text-base font-extrabold text-white shadow-sm transition hover:bg-[#028f4e] active:scale-[0.99] disabled:opacity-60 sm:flex"
+              className="hidden w-full items-center justify-center gap-2 rounded-full bg-[#0d7a5f] py-4 text-base font-extrabold text-white shadow-sm transition hover:bg-[#0a634c] active:scale-[0.99] disabled:opacity-60 sm:flex"
             >
               <Heart className="size-4 fill-white" />
               {submitting ? "Processing…" : isPayPal ? "Continue to PayPal" : isCard ? "Pay with card" : "Donate now"}
@@ -520,7 +520,7 @@ function Donate() {
             </div>
 
             <div className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-white p-4">
-              <ShieldCheck className="mt-0.5 size-5 shrink-0 text-[#02a95c]" />
+              <ShieldCheck className="mt-0.5 size-5 shrink-0 text-[#0d7a5f]" />
               <p className="text-xs leading-relaxed text-neutral-600">
                 <span className="font-bold text-neutral-900">Donation protected.</span>{" "}
                 Funds are released directly to the medical provider and care committee.
@@ -549,7 +549,7 @@ function Donate() {
               const form = document.querySelector("form");
               form?.requestSubmit();
             }}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#02a95c] px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:bg-[#028f4e] disabled:opacity-60"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#0d7a5f] px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:bg-[#0a634c] disabled:opacity-60"
           >
             <Heart className="size-4 fill-white" />
             {submitting ? "Processing…" : "Donate"}
