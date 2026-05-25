@@ -141,7 +141,7 @@ function Contact() {
 
               <div className="mt-6 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2 text-xs text-neutral-500">
-                  <ShieldCheck className="size-4" style={{ color: BLUE }} />
+                  <ShieldCheck className="size-4" style={{ color: GOLD }} />
                   Your data is safe with us
                 </div>
                 <button

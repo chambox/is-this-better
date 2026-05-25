@@ -234,7 +234,7 @@ function Home() {
                       <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-100">
                         <div
                           className="h-full rounded-full"
-                          style={{ width: `${percent}%`, background: `linear-gradient(90deg, ${PRIMARY}, ${BLUE})` }}
+                          style={{ width: `${percent}%`, background: `linear-gradient(90deg, ${PRIMARY}, ${GOLD})` }}
                         />
                       </div>
                       <div className="mt-2 flex items-baseline justify-between">
