@@ -14,8 +14,12 @@ import { Route as StartRouteImport } from './routes/start'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
+import { Route as AboutRefundGuaranteesRouteImport } from './routes/about.refund-guarantees'
+import { Route as AboutHowItWorksRouteImport } from './routes/about.how-it-works'
+import { Route as AboutFaqRouteImport } from './routes/about.faq'
 
 const ThanksRoute = ThanksRouteImport.update({
   id: '/thanks',
@@ -42,6 +46,11 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -52,72 +61,115 @@ const CSlugRoute = CSlugRouteImport.update({
   path: '/c/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRefundGuaranteesRoute = AboutRefundGuaranteesRouteImport.update({
+  id: '/about/refund-guarantees',
+  path: '/about/refund-guarantees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutHowItWorksRoute = AboutHowItWorksRouteImport.update({
+  id: '/about/how-it-works',
+  path: '/about/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutFaqRoute = AboutFaqRouteImport.update({
+  id: '/about/faq',
+  path: '/about/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/donate': typeof DonateRoute
   '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
+  '/about/faq': typeof AboutFaqRoute
+  '/about/how-it-works': typeof AboutHowItWorksRoute
+  '/about/refund-guarantees': typeof AboutRefundGuaranteesRoute
   '/c/$slug': typeof CSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/donate': typeof DonateRoute
   '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
+  '/about/faq': typeof AboutFaqRoute
+  '/about/how-it-works': typeof AboutHowItWorksRoute
+  '/about/refund-guarantees': typeof AboutRefundGuaranteesRoute
   '/c/$slug': typeof CSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/donate': typeof DonateRoute
   '/login': typeof LoginRoute
   '/start': typeof StartRoute
   '/thanks': typeof ThanksRoute
+  '/about/faq': typeof AboutFaqRoute
+  '/about/how-it-works': typeof AboutHowItWorksRoute
+  '/about/refund-guarantees': typeof AboutRefundGuaranteesRoute
   '/c/$slug': typeof CSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/contact'
     | '/dashboard'
     | '/donate'
     | '/login'
     | '/start'
     | '/thanks'
+    | '/about/faq'
+    | '/about/how-it-works'
+    | '/about/refund-guarantees'
     | '/c/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/contact'
     | '/dashboard'
     | '/donate'
     | '/login'
     | '/start'
     | '/thanks'
+    | '/about/faq'
+    | '/about/how-it-works'
+    | '/about/refund-guarantees'
     | '/c/$slug'
   id:
     | '__root__'
     | '/'
+    | '/contact'
     | '/dashboard'
     | '/donate'
     | '/login'
     | '/start'
     | '/thanks'
+    | '/about/faq'
+    | '/about/how-it-works'
+    | '/about/refund-guarantees'
     | '/c/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRoute
   DonateRoute: typeof DonateRoute
   LoginRoute: typeof LoginRoute
   StartRoute: typeof StartRoute
   ThanksRoute: typeof ThanksRoute
+  AboutFaqRoute: typeof AboutFaqRoute
+  AboutHowItWorksRoute: typeof AboutHowItWorksRoute
+  AboutRefundGuaranteesRoute: typeof AboutRefundGuaranteesRoute
   CSlugRoute: typeof CSlugRoute
 }
 
@@ -158,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -172,16 +231,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about/refund-guarantees': {
+      id: '/about/refund-guarantees'
+      path: '/about/refund-guarantees'
+      fullPath: '/about/refund-guarantees'
+      preLoaderRoute: typeof AboutRefundGuaranteesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about/how-it-works': {
+      id: '/about/how-it-works'
+      path: '/about/how-it-works'
+      fullPath: '/about/how-it-works'
+      preLoaderRoute: typeof AboutHowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about/faq': {
+      id: '/about/faq'
+      path: '/about/faq'
+      fullPath: '/about/faq'
+      preLoaderRoute: typeof AboutFaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
   DashboardRoute: DashboardRoute,
   DonateRoute: DonateRoute,
   LoginRoute: LoginRoute,
   StartRoute: StartRoute,
   ThanksRoute: ThanksRoute,
+  AboutFaqRoute: AboutFaqRoute,
+  AboutHowItWorksRoute: AboutHowItWorksRoute,
+  AboutRefundGuaranteesRoute: AboutRefundGuaranteesRoute,
   CSlugRoute: CSlugRoute,
 }
 export const routeTree = rootRouteImport
