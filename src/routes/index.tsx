@@ -8,15 +8,8 @@ import { CATEGORIES, fmtFCFA, useCampaigns } from "@/lib/campaigns";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { StatCounter } from "@/components/stat-counter";
-import hero1 from "@/assets/hero-1.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
-import hero4 from "@/assets/hero-4.jpg";
-import hero5 from "@/assets/hero-5.jpg";
-import trustImg from "@/assets/trust.jpg";
-import avatar1 from "@/assets/avatar-1.jpg";
-import avatar2 from "@/assets/avatar-2.jpg";
-import avatar3 from "@/assets/avatar-3.jpg";
+
+
 
 const PRIMARY = "#0d7a5f";
 const GOLD = "#c9a84c";
