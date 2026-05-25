@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Heart, Search, MapPin, Users, Plus, TrendingUp, ArrowRight, LayoutDashboard } from "lucide-react";
+import { Heart, Search, MapPin, Users, TrendingUp, ChevronDown, User as UserIcon } from "lucide-react";
 import { CATEGORIES, fmtFCFA, useCampaigns } from "@/lib/campaigns";
 import { useAuth } from "@/lib/auth";
 
@@ -36,77 +36,109 @@ function Browse() {
     });
   }, [campaigns, query, activeCat]);
 
-  const totalRaised = campaigns.reduce((s, c) => s + c.raised, 0);
-  const totalDonors = campaigns.reduce((s, c) => s + c.donors.length, 0);
+
+
+
+  const photos = [
+    "https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=600&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=600&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80&auto=format&fit=crop",
+  ];
+  const fanTransforms = [
+    "rotate(-18deg) translateY(70px)",
+    "rotate(-9deg) translateY(20px)",
+    "rotate(0deg) translateY(0px)",
+    "rotate(9deg) translateY(20px)",
+    "rotate(18deg) translateY(70px)",
+  ];
 
   return (
     <div className="min-h-screen bg-[#f3f3f1] text-neutral-900">
       <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-6xl items-center px-4 sm:px-6">
-          <Link to="/" className="flex items-center gap-1.5">
+        <div className="mx-auto grid h-16 max-w-7xl grid-cols-3 items-center px-4 sm:px-8">
+          {/* Left nav */}
+          <nav className="flex items-center gap-6 text-sm font-semibold text-neutral-800">
+            <a href="#discover" className="inline-flex items-center gap-1.5 hover:text-[#02a95c]">
+              <Search className="size-4" /> To search
+            </a>
+            <button className="hidden items-center gap-1 hover:text-[#02a95c] sm:inline-flex">
+              Donate <ChevronDown className="size-3.5" />
+            </button>
+            <button className="hidden items-center gap-1 hover:text-[#02a95c] sm:inline-flex">
+              Fundraising <ChevronDown className="size-3.5" />
+            </button>
+          </nav>
+
+          {/* Center logo */}
+          <Link to="/" className="flex items-center justify-center gap-1.5">
             <span className="grid size-7 place-items-center rounded-full bg-[#02a95c]">
               <Heart className="size-3.5 fill-white text-white" />
             </span>
-            <span className="text-lg font-extrabold tracking-tight">givehope</span>
+            <span className="text-xl font-extrabold tracking-tight">givehope</span>
           </Link>
-          <div className="ml-auto flex items-center gap-2 sm:gap-3">
+
+          {/* Right nav */}
+          <div className="flex items-center justify-end gap-5">
+            <button className="hidden items-center gap-1 text-sm font-semibold text-neutral-800 hover:text-[#02a95c] sm:inline-flex">
+              About <ChevronDown className="size-3.5" />
+            </button>
             {user ? (
-              <>
-                <Link to="/dashboard" className="hidden items-center gap-1.5 rounded-full border border-neutral-200 px-3 py-1.5 text-sm font-bold text-neutral-700 hover:bg-neutral-50 sm:inline-flex">
-                  <LayoutDashboard className="size-3.5" /> Dashboard
-                </Link>
-                <Link to="/dashboard" className="grid size-9 place-items-center rounded-full bg-[#02a95c] text-sm font-extrabold text-white" title={user.name}>
-                  {user.avatar}
-                </Link>
-              </>
+              <Link to="/dashboard" className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm font-bold text-neutral-800 hover:bg-neutral-50">
+                <span className="grid size-6 place-items-center rounded-full bg-neutral-100">
+                  <UserIcon className="size-3.5 text-neutral-700" />
+                </span>
+                {user.name.split(" ")[0]}
+                <ChevronDown className="size-3.5" />
+              </Link>
             ) : (
-              <Link to="/login" className="hidden text-sm font-bold text-neutral-700 hover:text-neutral-900 sm:inline">
+              <Link to="/login" className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm font-bold text-neutral-800 hover:bg-neutral-50">
+                <span className="grid size-6 place-items-center rounded-full bg-neutral-100">
+                  <UserIcon className="size-3.5 text-neutral-700" />
+                </span>
                 Sign in
               </Link>
             )}
-            <Link to="/start" className="inline-flex items-center gap-1.5 rounded-full bg-[#02a95c] px-4 py-1.5 text-sm font-extrabold text-white transition hover:bg-[#028f4e]">
-              <Plus className="size-3.5" /> Start a fundraiser
-            </Link>
           </div>
         </div>
       </header>
 
       {/* Hero */}
-      <section className="border-b border-neutral-200 bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-16">
-          <div className="max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#02a95c]">Community fundraising</p>
-            <h1 className="mt-3 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
-              Help people in your community when it matters most.
-            </h1>
-            <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-              Discover fundraisers from families, friends, and local groups — or start your own in minutes.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <Link to="/start" className="inline-flex items-center gap-1.5 rounded-full bg-[#02a95c] px-5 py-3 text-sm font-extrabold text-white transition hover:bg-[#028f4e]">
-                <Plus className="size-4" /> Start a fundraiser
-              </Link>
-              <a href="#discover" className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-5 py-3 text-sm font-bold text-neutral-700 transition hover:bg-neutral-50">
-                Browse fundraisers <ArrowRight className="size-3.5" />
-              </a>
-            </div>
+      <section className="bg-white">
+        <div className="mx-auto max-w-5xl px-4 pt-16 text-center sm:px-6 sm:pt-24">
+          <span className="inline-block rounded-md bg-[#d3f4b4] px-3 py-1.5 text-xs font-extrabold text-neutral-900">
+            The most popular platform for crowdfunding
+          </span>
+          <h1 className="mx-auto mt-8 max-w-4xl text-5xl font-black leading-[1.05] tracking-tight text-neutral-900 sm:text-7xl">
+            The starting point of successful fundraising campaigns
+          </h1>
+          <div className="mt-10">
+            <Link
+              to="/start"
+              className="inline-flex items-center justify-center rounded-full bg-[#0a4d2e] px-8 py-4 text-base font-extrabold text-white shadow-sm transition hover:bg-[#073a23]"
+            >
+              Start a givehope
+            </Link>
           </div>
-          <div className="mt-10 grid grid-cols-3 gap-4 sm:max-w-xl">
-            <div>
-              <p className="text-2xl font-extrabold sm:text-3xl">{campaigns.length}</p>
-              <p className="text-xs font-semibold text-neutral-500">Active fundraisers</p>
-            </div>
-            <div>
-              <p className="text-2xl font-extrabold sm:text-3xl">{fmtFCFA(totalRaised)}</p>
-              <p className="text-xs font-semibold text-neutral-500">FCFA raised</p>
-            </div>
-            <div>
-              <p className="text-2xl font-extrabold sm:text-3xl">{totalDonors}</p>
-              <p className="text-xs font-semibold text-neutral-500">Donors</p>
+
+          {/* Fan of photos */}
+          <div className="relative mx-auto mt-20 h-[260px] max-w-5xl sm:h-[320px]">
+            <div className="absolute inset-x-0 bottom-0 flex items-end justify-center gap-3 sm:gap-5">
+              {photos.map((src, i) => (
+                <div
+                  key={i}
+                  className="h-44 w-32 overflow-hidden rounded-2xl bg-neutral-200 shadow-lg ring-1 ring-black/5 sm:h-60 sm:w-44"
+                  style={{ transform: fanTransforms[i], transformOrigin: "bottom center" }}
+                >
+                  <img src={src} alt="" className="h-full w-full object-cover" />
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
+
 
       {/* Discover */}
       <section id="discover" className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
