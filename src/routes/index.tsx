@@ -36,8 +36,8 @@ function Browse() {
     });
   }, [campaigns, query, activeCat]);
 
-  const totalRaised = campaigns.reduce((s, c) => s + c.raised, 0);
-  const totalDonors = campaigns.reduce((s, c) => s + c.donors.length, 0);
+
+
 
   const photos = [
     "https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=600&q=80&auto=format&fit=crop",
