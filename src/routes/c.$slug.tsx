@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound, useParams } from "@tanstack/react-rout
 import { useState } from "react";
 import {
   Heart, Share2, Copy, Check, Calendar, MapPin,
-  ShieldCheck, Flag, ChevronRight,
+  ShieldCheck, Flag, Users, TrendingUp, Gift,
 } from "lucide-react";
 import { toast } from "sonner";
 import { fmtFCFA, getCampaign, useCampaign } from "@/lib/campaigns";
@@ -30,13 +30,11 @@ export const Route = createFileRoute("/c/$slug")({
       : [{ title: "Fundraiser — givehope" }],
   }),
   notFoundComponent: () => (
-    <div className="grid min-h-screen place-items-center bg-[#f5f1e8] px-4 text-center">
+    <div className="grid min-h-screen place-items-center bg-white px-4 text-center">
       <div>
-        <h1 className="font-serif text-4xl text-neutral-900" style={{ fontFamily: "'Instrument Serif', serif" }}>
-          Fundraiser not found
-        </h1>
+        <h1 className="text-3xl font-bold text-neutral-900">Fundraiser not found</h1>
         <p className="mt-2 text-sm text-neutral-600">It may have been removed or the link is wrong.</p>
-        <Link to="/" className="mt-6 inline-flex items-center gap-1 border-b border-neutral-900 pb-0.5 text-sm font-semibold text-neutral-900">
+        <Link to="/" className="mt-6 inline-flex items-center gap-1 rounded-full bg-[var(--primary,#0d7a5f)] px-5 py-2.5 text-sm font-semibold text-white">
           Browse fundraisers
         </Link>
       </div>
@@ -44,15 +42,6 @@ export const Route = createFileRoute("/c/$slug")({
   ),
   component: CampaignPage,
 });
-
-const TEAM = [
-  { name: "Marie N.", role: "Committee chair" },
-  { name: "Pastor Joseph K.", role: "Community liaison" },
-  { name: "Dr. Aline T.", role: "Medical coordinator" },
-  { name: "Eric M.", role: "Treasurer" },
-];
-
-const serif = { fontFamily: "'Instrument Serif', 'Iowan Old Style', Georgia, serif" } as const;
 
 function CampaignPage() {
   const { slug } = useParams({ from: "/c/$slug" });
@@ -63,7 +52,6 @@ function CampaignPage() {
   if (!campaign) return null;
 
   const percent = Math.min(100, (campaign.raised / campaign.goal) * 100);
-  const remaining = Math.max(0, campaign.goal - campaign.raised);
 
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const shareText = `Help support: ${campaign.title}`;
@@ -80,201 +68,228 @@ function CampaignPage() {
     ? `${createdDays} day${createdDays > 1 ? "s" : ""} ago`
     : `${Math.round(createdDays / 7)} week${Math.round(createdDays / 7) > 1 ? "s" : ""} ago`;
 
-  const [firstPara, ...restParas] = campaign.story.split(/\n\n+/);
+  const fallbackImg = "https://images.unsplash.com/photo-1509099863731-ef4bff19e808?auto=format&fit=crop&w=1600&q=80";
+  const heroImage = campaign.image || fallbackImg;
 
   return (
-    <div className="min-h-screen bg-[#f5f1e8] text-neutral-900">
+    <div className="min-h-screen bg-white text-neutral-900">
       <SiteHeader />
 
-      <article className="mx-auto max-w-[1100px] px-5 pt-10 sm:px-8 sm:pt-16">
-        {/* Eyebrow */}
-        <div className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-500">
-          <span className="text-[var(--primary,#0d7a5f)]" style={{ color: "var(--primary, #0d7a5f)" }}>
-            {campaign.category}
-          </span>
-          <span aria-hidden>·</span>
-          <span>Fundraiser</span>
-        </div>
-
-        {/* Headline */}
-        <h1
-          className="mt-5 max-w-4xl text-[44px] leading-[1.05] tracking-tight text-neutral-900 sm:text-[68px] sm:leading-[1.02]"
-          style={serif}
-        >
+      <main className="mx-auto max-w-6xl px-4 pb-24 pt-6 sm:px-6 lg:pt-10">
+        {/* Title (mobile shows above image; desktop hidden — shown again below image on left col) */}
+        <h1 className="mb-4 text-2xl font-bold leading-tight sm:text-3xl lg:hidden">
           {campaign.title}
         </h1>
 
-        {/* Byline */}
-        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-neutral-600">
-          <span className="inline-flex items-center gap-1.5">
-            By <span className="font-semibold text-neutral-900">{campaign.organizer}</span>
-          </span>
-          <span className="inline-flex items-center gap-1.5"><MapPin className="size-3.5" /> {campaign.location}</span>
-          <span className="inline-flex items-center gap-1.5"><Calendar className="size-3.5" /> {createdLabel}</span>
-        </div>
-
-        {/* Hero image, full-bleed */}
-        {campaign.image && (
-          <figure className="mt-10">
-            <div className="aspect-[16/9] w-full overflow-hidden">
-              <img src={campaign.image} alt={campaign.title} className="h-full w-full object-cover" />
+        <div className="grid gap-8 lg:grid-cols-[1fr_400px]">
+          {/* LEFT COLUMN */}
+          <div>
+            {/* Hero image */}
+            <div className="overflow-hidden rounded-2xl">
+              <img src={heroImage} alt={campaign.title} className="aspect-[16/10] w-full object-cover" />
             </div>
-            <figcaption className="mt-3 text-[12px] italic text-neutral-500" style={serif}>
-              {campaign.location} — photograph courtesy of the organizing committee.
-            </figcaption>
-          </figure>
-        )}
 
-        <div className="mt-14 grid gap-x-16 gap-y-12 lg:grid-cols-[1fr_320px]">
-          {/* Story column */}
-          <div className="max-w-[64ch]">
-            <p className="text-[19px] leading-[1.7] text-neutral-800">
-              <span
-                className="float-left mr-3 mt-1 text-[68px] leading-[0.85] text-[var(--primary,#0d7a5f)]"
-                style={{ ...serif, color: "var(--primary, #0d7a5f)" }}
-              >
-                {firstPara?.charAt(0)}
+            {/* Title (desktop) */}
+            <h1 className="mt-6 hidden text-3xl font-bold leading-tight sm:text-4xl lg:block">
+              {campaign.title}
+            </h1>
+
+            {/* Meta row */}
+            <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-neutral-600">
+              <span className="inline-flex items-center gap-1.5"><MapPin className="size-4" /> {campaign.location}</span>
+              <span aria-hidden>·</span>
+              <span className="inline-flex items-center gap-1.5"><Calendar className="size-4" /> Created {createdLabel}</span>
+              <span aria-hidden>·</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-semibold text-neutral-700">
+                {campaign.category}
               </span>
-              {firstPara?.slice(1)}
-            </p>
-            {restParas.map((p, i) => (
-              <p key={i} className="mt-6 text-[17px] leading-[1.75] text-neutral-800">{p}</p>
-            ))}
+            </div>
+
+            {/* Organizer card */}
+            <div className="mt-6 flex items-center gap-3 rounded-xl border border-neutral-200 p-4">
+              <div className="grid size-10 place-items-center rounded-full bg-[var(--primary,#0d7a5f)] text-sm font-bold text-white">
+                {campaign.organizer.charAt(0)}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-neutral-900">{campaign.organizer}</p>
+                <p className="truncate text-xs text-neutral-500">is organizing this fundraiser</p>
+              </div>
+            </div>
+
+            {/* Story */}
+            <section className="mt-8">
+              <div className="space-y-4 text-[15px] leading-relaxed text-neutral-800">
+                {campaign.story.split(/\n\n+/).map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </section>
+
+            {/* Action buttons (mobile inline) */}
+            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:hidden">
+              <Link
+                to="/donate"
+                search={{ c: campaign.slug }}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary,#0d7a5f)] py-3 text-sm font-bold text-white shadow-sm hover:opacity-95"
+              >
+                <Heart className="size-4 fill-white" /> Donate now
+              </Link>
+              <button
+                onClick={handleCopy}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white py-3 text-sm font-bold text-neutral-900 hover:bg-neutral-50"
+              >
+                <Share2 className="size-4" /> Share
+              </button>
+            </div>
 
             {/* Updates */}
             {campaign.updates.length > 0 && (
-              <section className="mt-16 border-t border-neutral-300/70 pt-10">
-                <h2 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
-                  Updates from the organizer
-                </h2>
-                <div className="mt-8 space-y-10">
+              <section className="mt-10 rounded-2xl border border-neutral-200 p-6">
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="size-5 text-[var(--primary,#0d7a5f)]" />
+                  <h2 className="text-lg font-bold">Updates ({campaign.updates.length})</h2>
+                </div>
+                <div className="mt-5 space-y-6">
                   {campaign.updates.map((u, i) => (
-                    <div key={i} className="grid gap-2 sm:grid-cols-[120px_1fr] sm:gap-8">
-                      <div className="text-[13px] uppercase tracking-wider text-neutral-500" style={serif}>
-                        {u.date}
-                      </div>
-                      <div>
-                        <h3 className="text-[24px] leading-tight text-neutral-900" style={serif}>{u.title}</h3>
-                        <p className="mt-2 text-[16px] leading-[1.75] text-neutral-700">{u.body}</p>
-                      </div>
+                    <div key={i} className="border-l-2 border-[var(--primary,#0d7a5f)] pl-4">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">{u.date}</p>
+                      <h3 className="mt-1 text-base font-bold text-neutral-900">{u.title}</h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-neutral-700">{u.body}</p>
                     </div>
                   ))}
                 </div>
               </section>
             )}
 
-            {/* Committee */}
-            <section className="mt-16 border-t border-neutral-300/70 pt-10">
-              <h2 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
-                Organizing committee
-              </h2>
-              <ul className="mt-6 divide-y divide-neutral-200">
-                {TEAM.map((m) => (
-                  <li key={m.name} className="flex items-baseline justify-between py-3">
-                    <span className="text-[20px] text-neutral-900" style={serif}>{m.name}</span>
-                    <span className="text-[12px] uppercase tracking-wider text-neutral-500">{m.role}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            {/* Report */}
+            <div className="mt-10 flex justify-center">
+              <button
+                onClick={() => toast.success("Report submitted.")}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-500 hover:text-neutral-900"
+              >
+                <Flag className="size-3.5" /> Report fundraiser
+              </button>
+            </div>
           </div>
 
-          {/* Sidebar — minimal, no card chrome */}
+          {/* RIGHT COLUMN — Donation card */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="border-t-2 border-neutral-900 pt-5">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-500">Raised so far</p>
-              <p className="mt-3 text-[44px] leading-none text-neutral-900" style={serif}>
-                {fmtFCFA(campaign.raised)} <span className="text-[16px] text-neutral-500">FCFA</span>
+            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+              <p className="text-2xl font-bold text-neutral-900">
+                {fmtFCFA(campaign.raised)} <span className="text-base font-normal text-neutral-500">FCFA raised</span>
               </p>
-              <p className="mt-2 text-[13px] text-neutral-600">
-                of {fmtFCFA(campaign.goal)} FCFA goal · {campaign.donors.length} donors
+              <p className="mt-1 text-sm text-neutral-600">
+                of {fmtFCFA(campaign.goal)} FCFA goal · <span className="font-semibold text-neutral-900">{campaign.donors.length} donations</span>
               </p>
 
-              <div className="mt-5 h-[3px] w-full bg-neutral-200">
-                <div className="h-full bg-[var(--primary,#0d7a5f)]" style={{ width: `${percent}%`, background: "var(--primary, #0d7a5f)" }} />
-              </div>
-              <p className="mt-2 text-[12px] text-neutral-500">{fmtFCFA(remaining)} FCFA still needed</p>
-
-              <Link
-                to="/donate"
-                search={{ c: campaign.slug }}
-                className="mt-6 flex w-full items-center justify-center gap-2 bg-neutral-900 py-3.5 text-[13px] font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-neutral-800"
-              >
-                <Heart className="size-3.5 fill-white" /> Donate
-              </Link>
-
-              <div className="mt-8">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-500">Share</p>
-                <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[13px]">
-                  <a className="border-b border-neutral-300 pb-0.5 hover:border-neutral-900" target="_blank" rel="noopener noreferrer"
-                     href={`https://wa.me/?text=${encodeURIComponent(shareText + " " + shareUrl)}`}>WhatsApp</a>
-                  <a className="border-b border-neutral-300 pb-0.5 hover:border-neutral-900" target="_blank" rel="noopener noreferrer"
-                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}>Facebook</a>
-                  <a className="border-b border-neutral-300 pb-0.5 hover:border-neutral-900" target="_blank" rel="noopener noreferrer"
-                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}>X / Twitter</a>
-                  <button onClick={handleCopy} className="inline-flex items-center gap-1 border-b border-neutral-300 pb-0.5 hover:border-neutral-900">
-                    {copied ? <Check className="size-3" /> : <Copy className="size-3" />} {copied ? "Copied" : "Copy link"}
-                  </button>
-                </div>
+              <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-neutral-200">
+                <div className="h-full rounded-full bg-[var(--primary,#0d7a5f)] transition-all" style={{ width: `${percent}%` }} />
               </div>
 
-              <p className="mt-8 flex items-start gap-2 text-[12px] leading-relaxed text-neutral-600">
-                <ShieldCheck className="mt-0.5 size-3.5 shrink-0" />
-                Donation protected. Funds released directly to the verified organizer.
-              </p>
+              <div className="mt-5 grid gap-3">
+                <Link
+                  to="/donate"
+                  search={{ c: campaign.slug }}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary,#0d7a5f)] py-3.5 text-base font-bold text-white shadow-sm hover:opacity-95"
+                >
+                  <Heart className="size-5 fill-white" /> Donate now
+                </Link>
+                <button
+                  onClick={handleCopy}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[var(--primary,#0d7a5f)] py-3 text-base font-bold text-[var(--primary,#0d7a5f)] hover:bg-[var(--primary,#0d7a5f)]/5"
+                >
+                  {copied ? <Check className="size-4" /> : <Share2 className="size-4" />} {copied ? "Link copied" : "Share"}
+                </button>
+              </div>
+
+              {/* Quick share row */}
+              <div className="mt-5 flex items-center justify-between gap-2 border-t border-neutral-100 pt-5">
+                <a
+                  className="flex flex-1 items-center justify-center rounded-full bg-neutral-100 py-2 text-xs font-semibold hover:bg-neutral-200"
+                  target="_blank" rel="noopener noreferrer"
+                  href={`https://wa.me/?text=${encodeURIComponent(shareText + " " + shareUrl)}`}
+                >WhatsApp</a>
+                <a
+                  className="flex flex-1 items-center justify-center rounded-full bg-neutral-100 py-2 text-xs font-semibold hover:bg-neutral-200"
+                  target="_blank" rel="noopener noreferrer"
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+                >Facebook</a>
+                <a
+                  className="flex flex-1 items-center justify-center rounded-full bg-neutral-100 py-2 text-xs font-semibold hover:bg-neutral-200"
+                  target="_blank" rel="noopener noreferrer"
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}
+                >X</a>
+                <button
+                  onClick={handleCopy}
+                  className="flex flex-1 items-center justify-center gap-1 rounded-full bg-neutral-100 py-2 text-xs font-semibold hover:bg-neutral-200"
+                >
+                  {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
+                </button>
+              </div>
+
+              <div className="mt-5 flex items-start gap-2 rounded-lg bg-neutral-50 p-3 text-xs text-neutral-600">
+                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[var(--primary,#0d7a5f)]" />
+                <span>Donation protected. Funds released directly to the verified organizer.</span>
+              </div>
             </div>
 
-            {/* Recent donors */}
+            {/* Donors card */}
             {campaign.donors.length > 0 && (
-              <div className="mt-10 border-t border-neutral-300/70 pt-6">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-500">Recent donations</p>
-                <ul className="mt-4 divide-y divide-neutral-200">
-                  {(showAllDonors ? campaign.donors : campaign.donors.slice(0, 4)).map((d, i) => (
-                    <li key={i} className="flex items-baseline justify-between py-2.5">
-                      <div className="min-w-0">
-                        <p className="truncate text-[14px] text-neutral-900" style={serif}>{d.name}</p>
-                        <p className="text-[11px] text-neutral-500">{d.time}</p>
+              <div className="mt-6 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <Users className="size-5 text-[var(--primary,#0d7a5f)]" />
+                  <h2 className="text-base font-bold">Recent donations</h2>
+                </div>
+                <ul className="mt-4 space-y-4">
+                  {(showAllDonors ? campaign.donors : campaign.donors.slice(0, 5)).map((d, i) => (
+                    <li key={i} className="flex items-center gap-3">
+                      <div className="grid size-9 place-items-center rounded-full bg-neutral-100 text-sm font-semibold text-neutral-700">
+                        {d.avatar}
                       </div>
-                      <span className="text-[13px] font-semibold tabular-nums text-neutral-900">{fmtFCFA(d.amount)}</span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-neutral-900">{d.name}</p>
+                        <p className="text-xs text-neutral-500">{d.time}</p>
+                      </div>
+                      <span className="text-sm font-bold tabular-nums text-neutral-900">{fmtFCFA(d.amount)}</span>
                     </li>
                   ))}
                 </ul>
-                {campaign.donors.length > 4 && (
-                  <button onClick={() => setShowAllDonors(!showAllDonors)} className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold uppercase tracking-wider text-neutral-700 hover:text-neutral-900">
-                    {showAllDonors ? "Show less" : "See all"} <ChevronRight className="size-3" />
+                {campaign.donors.length > 5 && (
+                  <button
+                    onClick={() => setShowAllDonors(!showAllDonors)}
+                    className="mt-4 w-full rounded-full border border-neutral-300 py-2 text-sm font-semibold text-neutral-900 hover:bg-neutral-50"
+                  >
+                    {showAllDonors ? "Show less" : `See all ${campaign.donors.length}`}
                   </button>
                 )}
+                <div className="mt-4 flex items-center gap-2 text-xs text-neutral-500">
+                  <Gift className="size-3.5" /> Be a part of this story
+                </div>
               </div>
             )}
           </aside>
         </div>
-
-        {/* Closing report bar */}
-        <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-neutral-300/70 py-6 text-[12px] text-neutral-500">
-          <button onClick={() => toast.success("Report submitted.")} className="inline-flex items-center gap-1.5 hover:text-neutral-900">
-            <Flag className="size-3" /> Report this fundraiser
-          </button>
-          <button onClick={handleCopy} className="inline-flex items-center gap-1.5 hover:text-neutral-900">
-            <Share2 className="size-3" /> Share with friends
-          </button>
-        </div>
-      </article>
+      </main>
 
       <SiteFooter />
 
-      {/* Mobile donate dock — slimmer */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-200 bg-[#f5f1e8]/95 px-4 py-3 backdrop-blur lg:hidden">
-        <div className="mx-auto flex max-w-6xl items-center gap-4">
+      {/* Mobile donate dock */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-200 bg-white px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] lg:hidden">
+        <div className="mx-auto flex max-w-6xl items-center gap-3">
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[13px] text-neutral-900" style={serif}>
-              {fmtFCFA(campaign.raised)} <span className="text-neutral-500">of {fmtFCFA(campaign.goal)} FCFA</span>
+            <p className="truncate text-sm font-bold text-neutral-900">
+              {fmtFCFA(campaign.raised)} <span className="font-normal text-neutral-500">of {fmtFCFA(campaign.goal)}</span>
             </p>
-            <div className="mt-1 h-[2px] w-full bg-neutral-200">
-              <div className="h-full" style={{ width: `${percent}%`, background: "var(--primary, #0d7a5f)" }} />
+            <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-neutral-200">
+              <div className="h-full rounded-full bg-[var(--primary,#0d7a5f)]" style={{ width: `${percent}%` }} />
             </div>
           </div>
-          <Link to="/donate" search={{ c: campaign.slug }} className="inline-flex shrink-0 items-center gap-1.5 bg-neutral-900 px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-white">
-            <Heart className="size-3.5 fill-white" /> Donate
+          <Link
+            to="/donate"
+            search={{ c: campaign.slug }}
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[var(--primary,#0d7a5f)] px-5 py-2.5 text-sm font-bold text-white"
+          >
+            <Heart className="size-4 fill-white" /> Donate
           </Link>
         </div>
       </div>
